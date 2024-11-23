@@ -40,10 +40,16 @@ public class SalaController {
         return new ResponseEntity<>(salaService.adicionarProfessorEmUmaSala(codigoSala, codigoProfessor), HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/codigoSala/{codigoSala}/codigoAluno/{codigoAluno}")
-    public  ResponseEntity<?> removerAlunoEmUmaSala(@PathVariable Long codigoSala,
+    @PutMapping(path = "/remover/codigoSala/{codigoSala}/codigoAluno/{codigoAluno}")
+    public  ResponseEntity<?> removerAlunoDeUmaSala(@PathVariable Long codigoSala,
                                                     @PathVariable Long codigoAluno){
         return new ResponseEntity<>(salaService.removerAlunoDeUmaSala(codigoSala, codigoAluno), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/remover/codigoSala/{codigoSala}/codigoProfessor/{codigoProfessor}")
+    public  ResponseEntity<?> removerProfessorDeUmaSala(@PathVariable Long codigoSala,
+                                                        @PathVariable Long codigoProfessor){
+        return new ResponseEntity<>(salaService.removerProfessorDeUmaSala(codigoSala, codigoProfessor), HttpStatus.OK);
     }
 
     @DeleteMapping

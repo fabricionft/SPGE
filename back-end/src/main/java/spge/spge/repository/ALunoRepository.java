@@ -9,7 +9,7 @@ import spge.spge.model.NotaModel;
 import java.util.Optional;
 
 @Repository
-public interface ALunoRepository extends JpaRepository<AlunoModel, Long> {
+public interface AlunoRepository extends JpaRepository<AlunoModel, Long> {
 
     Optional<AlunoModel> findByCodigo(Long codigo);
 

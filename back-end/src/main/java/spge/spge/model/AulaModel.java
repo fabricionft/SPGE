@@ -6,23 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "notas")
-@Entity(name = "Nota")
+@Table(name = "aulas")
+@Entity(name = "Aula")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class NotaModel {
+public class AulaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    private String materia;
-
-    private Integer nota;
-
-    private Integer totalDeAulas;
-
-    private Integer totalDePresencas;
+    private String data;
+    private Integer quantidadeDeAulasContinuas;
 }

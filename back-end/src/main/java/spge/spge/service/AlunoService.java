@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import spge.spge.model.AlunoModel;
 import spge.spge.model.BimestreModel;
 import spge.spge.model.NotaModel;
-import spge.spge.repository.ALunoRepository;
+import spge.spge.repository.AlunoRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class AlunoService {
 
     @Autowired
-    private ALunoRepository aLunoRepository;
+    private AlunoRepository aLunoRepository;
 
 
     public List<AlunoModel> listarAlunos(){

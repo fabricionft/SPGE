@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name = "professores")
 @Entity(name = "Professor")
 @NoArgsConstructor
@@ -21,4 +24,8 @@ public class ProfessorModel {
     private String nome;
 
     private String materia;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "aulss_id")
+    private List<AulaModel> aulas = new ArrayList<>();
 }

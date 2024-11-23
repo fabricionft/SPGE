@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import spge.spge.dto.request.SalaRequestDTO;
 import spge.spge.exception.RequestException;
 import spge.spge.model.*;
-import spge.spge.repository.ALunoRepository;
+import spge.spge.repository.AlunoRepository;
 import spge.spge.repository.ProfessorRepository;
 import spge.spge.repository.SalaRepository;
 
@@ -18,7 +18,7 @@ public class SalaService {
     private SalaRepository salaRepository;
 
     @Autowired
-    private ALunoRepository aLunoRepository;
+    private AlunoRepository aLunoRepository;
 
     @Autowired
     private ProfessorRepository professorRepository;
@@ -53,7 +53,9 @@ public class SalaService {
                     bimestre.getBimestres().add(new NotaModel(
                         null,
                         materia,
-                        0
+                        0,//Nota
+                        0,//Total de presenças
+                        0//Total de aulas
                     ));
                 };
             }
@@ -72,13 +74,12 @@ public class SalaService {
 
         if(sala.getAlunos().contains(aluno)) {
             sala.getAlunos().remove(aluno);
+
+            sala.setQuantidadeDeAlunos(sala.getQuantidadeDeAlunos() - 1);
+            return salaRepository.save(sala);
         }else{
             throw  new RequestException("Este aluno não faz parte destya sala!");
         }
-
-        sala.setQuantidadeDeAlunos(sala.getQuantidadeDeAlunos() - 1);
-
-        return salaRepository.save(sala);
     }
 
     public SalaModel adicionarProfessorEmUmaSala(Long codigoSala, Long codigoProfessor){
@@ -92,6 +93,19 @@ public class SalaService {
         }
 
         return salaRepository.save(sala);
+    }
+
+    public SalaModel removerProfessorDeUmaSala(Long codigoSala, Long codigoProfessor){
+        SalaModel sala = buscarSalaPorCodigo(codigoSala);
+        ProfessorModel professor = buscarProfessorPorCodigo(codigoProfessor);
+
+        if(sala.getProfessores().contains(professor)){
+            sala.getProfessores().remove(professor);
+
+            return salaRepository.save(sala);
+        }else{
+            throw new RequestException("Este professor nâo faz parte desta sala!");
+        }
     }
 
     public String excluirSalaPorCodigo(Long codigo){

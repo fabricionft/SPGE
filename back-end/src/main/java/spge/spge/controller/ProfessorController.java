@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spge.spge.dto.request.CriarAulaRequestDTO;
 import spge.spge.dto.request.DefinirNotaRequestDTO;
 import spge.spge.model.ProfessorModel;
 import spge.spge.service.ProfessorService;
@@ -31,8 +32,13 @@ public class ProfessorController {
         return new ResponseEntity<>(professorService.salvarProfessor(professor), HttpStatus.CREATED);
     }
 
+    @PostMapping(path = "/teste")
+    public  ResponseEntity<?> teste(@RequestBody CriarAulaRequestDTO criarAulaRequest){
+        return new ResponseEntity<>(professorService.criarAula(criarAulaRequest), HttpStatus.OK);
+    }
+
     @PutMapping(path = "/definirNota")
-    public ResponseEntity<?> buscarsdf(@RequestBody DefinirNotaRequestDTO definirNota){
+    public ResponseEntity<?> definirNota(@RequestBody DefinirNotaRequestDTO definirNota){
         return  new ResponseEntity<>(professorService.definirNotaDeUmAluno(definirNota), HttpStatus.OK);
     }
 }
