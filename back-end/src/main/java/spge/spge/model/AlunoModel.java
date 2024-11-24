@@ -23,7 +23,37 @@ public class AlunoModel {
 
     private String nome;
 
+    private String rg;
+
+    @Column(length = 11)
+    private String cpf;
+
+    private String nomeDaMae;
+
+    private String nomeDoPai;
+
+    private String dataDeNascimento;
+
+    @Column(length = 11)
+    private Integer ra;
+
+    private Integer matricula;
+
+    //Login
+    private String email;
+    private String senha;
+
+    //Endereço
+    private Integer cep;
+    private String estado;
+    private String cidade;
+    private String bairro;
+    private String rua;
+    private Integer numero;
+    private String complemento;
+
+    //Desempenho
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "bimestres_id")
-    private List<BimestreModel> historicoDeNotas = new ArrayList<>();
+    private List<BimestreModel> historicoDeDesempenho = new ArrayList<>();
 }

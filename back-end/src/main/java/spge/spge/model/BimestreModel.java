@@ -24,6 +24,6 @@ public class BimestreModel {
     private Integer numeroDoBimestre;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "notas_id")
-    private List<NotaModel> bimestres = new ArrayList<>();
+    @JoinColumn(name = "desempenho_id")
+    private List<DesempenhoModel> desempenho = new ArrayList<>();
 }

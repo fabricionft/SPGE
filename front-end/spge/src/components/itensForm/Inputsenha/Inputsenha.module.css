@@ -1,0 +1,16 @@
+.linhaInputSenha{
+  width: 100%;
+  position: relative;
+  border: 2px solid red;
+  margin-bottom: 20px;
+}
+
+.linhaInputSenha input{margin-bottom: 0px;}
+
+.linhaInputSenha img{
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  width: 22.5px;
+}

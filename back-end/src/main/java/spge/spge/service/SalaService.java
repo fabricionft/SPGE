@@ -48,9 +48,9 @@ public class SalaService {
         if(sala.getAlunos().contains(aluno)){
             throw new RequestException("Desculpe, este aluno já faz parte desta sala!");
         }else {
-            for (BimestreModel bimestre: aluno.getHistoricoDeNotas()){
+            for (BimestreModel bimestre: aluno.getHistoricoDeDesempenho()){
                 for(String materia: sala.getMaterias()){
-                    bimestre.getBimestres().add(new NotaModel(
+                    bimestre.getDesempenho().add(new DesempenhoModel(
                         null,
                         materia,
                         0,//Nota

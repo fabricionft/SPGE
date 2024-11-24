@@ -11,7 +11,6 @@ import spge.spge.repository.ProfessorRepository;
 import spge.spge.repository.SalaRepository;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,14 +63,19 @@ public class ProfessorService {
 
         int indice = 0;
         for(AlunoModel aluno: alunos){
-            if(aLunoRepository.buscarNotaEspecificaEmBimestreEspecificoDeUmAluno(aluno.getCodigo(), criarAulaRequest.getNumeroDoBimestre(), professor.getMateria()).isPresent()){
-                NotaModel nota = aLunoRepository.buscarNotaEspecificaEmBimestreEspecificoDeUmAluno(aluno.getCodigo(), criarAulaRequest.getNumeroDoBimestre(), professor.getMateria()).get();
+            if(aLunoRepository.buscarDesempenhoEspecificoEmBimestreEspecificoDeUmAluno(aluno.getCodigo(), criarAulaRequest.getNumeroDoBimestre(), professor.getMateria()).isPresent()){
+                DesempenhoModel desempenho = aLunoRepository.buscarDesempenhoEspecificoEmBimestreEspecificoDeUmAluno
+                (
+                    aluno.getCodigo(),
+                    criarAulaRequest.getNumeroDoBimestre(),
+                    professor.getMateria()
+                ).get();
 
                 if(criarAulaRequest.getPresencas().get(indice).equals("P")){ // P = pressente, A = ausente
-                    nota.setTotalDePresencas(nota.getTotalDePresencas() + criarAulaRequest.getQuantidadeDeAulas());
+                    desempenho.setTotalDePresencas(desempenho.getTotalDePresencas() + criarAulaRequest.getQuantidadeDeAulas());
                 }
 
-                nota.setTotalDeAulas(nota.getTotalDeAulas() + criarAulaRequest.getQuantidadeDeAulas());
+                desempenho.setTotalDeAulas(desempenho.getTotalDeAulas() + criarAulaRequest.getQuantidadeDeAulas());
             }
             indice++;
         }
@@ -103,14 +107,14 @@ public class ProfessorService {
             throw new RequestException("Defina uma nota válida, que fique entre 0-10.");
         }
 
-        NotaModel nota = aLunoRepository.buscarNotaEspecificaEmBimestreEspecificoDeUmAluno
+        DesempenhoModel desempenho = aLunoRepository.buscarDesempenhoEspecificoEmBimestreEspecificoDeUmAluno
         (
             aluno.getCodigo(),
             definirNota.getNumeroDoBimestre(),
             definirNota.getMateria()
         ).orElseThrow(() -> new RequestException("impossível buscar essa nota!"));
 
-        nota.setNota(definirNota.getNota());
+        desempenho.setNota(definirNota.getNota());
 
         return aLunoRepository.save(aluno);
     }
