@@ -1,24 +1,28 @@
 import BotaoLink from '../../../components/utils/BotaoLink';
 import Container from '../../../components/layout/Container/inde';
-import styles from './Home.module.css';
+import useSessao from '../../../hooks/useSessao';
 
 export default function Home(){
 
+  const {sessaoAluno, sessaoProfessor, sessaoFuncionario} = useSessao();
+
   return(
-    <Container>
+    <Container
+      centralizar={true}
+    >
       <BotaoLink
-        destino={"/loginAluno"}
-        msg={"Teste"}
+        destino={(sessaoAluno) ? "/menuAluno" : "/loginAluno"}
+        msg={"Sou aluno"}
       />
-
+      <br />
       <BotaoLink
-        destino={"/"}
-        msg={"Teste"}
+        destino={(sessaoProfessor) ? "/menuProfessor" : "/loginProfessor"}
+        msg={"Sou professor"}
       />
-
+      <br />
       <BotaoLink
-        destino={"/"}
-        msg={"Teste"}
+        destino={(sessaoFuncionario) ? "/menuFuncionario" : "/loginFuncionario"}
+        msg={"Sou funcionário"}
       />
     </Container>
   )

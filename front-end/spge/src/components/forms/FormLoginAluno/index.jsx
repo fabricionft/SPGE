@@ -25,7 +25,12 @@ export default function FormLoginAluno(){
       />
 
 
-      <button>Login</button>
+      <button
+        disabled={(aluno.email && aluno.senha) ? false : true}
+        className={(aluno.email && aluno.senha) ? "" : "desativado"}
+      >
+        Login
+      </button>
 
       <>
         {

@@ -1,0 +1,65 @@
+.card{
+  width:calc(18.4% - 2px);
+  min-height: 150px;
+  margin: 0 0 20px 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card);
+  border-radius: 7.5px;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+}
+
+.card:hover{
+  filter: brightness(90%);
+}
+
+.margemCard{
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+.card:nth-child(5n + 1){
+  margin-left: 0;
+}
+
+@media screen and (max-width: 1400px){
+  .card,  .card:nth-child(5n + 1){
+    width: 22.9%;
+    margin-left: 2.5%;;
+  }
+
+  .card:nth-child(4n + 1){
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 1100px){
+  .card, .card:nth-child(5n + 1),  .card:nth-child(4n + 1){
+    width: 31.3%;
+    margin-left: 2.5%;
+  }
+
+  .card:nth-child(3n + 1){
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .card, .card:nth-child(5n + 1), .card:nth-child(4n + 1),   .card:nth-child(3n + 1){
+    width: 47%;
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 350px){
+  .card, .card:nth-child(5n + 1), .card:nth-child(4n + 1),   .card:nth-child(3n + 1){
+    width: 100%;
+  }
+}

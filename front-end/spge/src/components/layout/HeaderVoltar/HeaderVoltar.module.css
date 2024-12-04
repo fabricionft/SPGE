@@ -1,0 +1,22 @@
+.headerAluno{
+  position: absolute;
+  width: 90.5%;
+  height:50px;
+  top: 30px;
+  display: flex;
+  align-items: center;
+  background-color: var(--fundo);
+}
+
+.btnVoltar{
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btnVoltar img{
+  width: 20px;
+}

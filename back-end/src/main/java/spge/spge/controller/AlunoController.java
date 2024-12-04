@@ -21,13 +21,20 @@ public class AlunoController {
         return new ResponseEntity<>(alunoService.listarAlunos(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/listarAlunosDeUmaSalaEmOrdemAlfabetica/{codigoSala}")
+    public  ResponseEntity<?> listarAlunosDeUmaSalaEmOrdemAlfabetica (@PathVariable Long codigoSala){
+        return new ResponseEntity<>(alunoService.listarAlunosDeUmaSalaEmOrdemAlfabetica(codigoSala), HttpStatus.OK);
+    }
+
     @GetMapping(path = "/{codigo}")
     public ResponseEntity<?> buscarAlunoPorCodigo(@PathVariable Long codigo){
         return new ResponseEntity<>(alunoService.buscarAlunoPorCodigo(codigo), HttpStatus.OK);
     }
 
-    @PostMapping ResponseEntity<?> salvarAluno(@RequestBody AlunoModel aluno){
-        return new ResponseEntity<>(alunoService.salvarAluno(aluno), HttpStatus.CREATED);
+    @PostMapping(path = "/{primeiroSave}")
+    public ResponseEntity<?> salvarAluno(@RequestBody AlunoModel aluno,
+                                         @PathVariable Boolean primeiroSave){
+        return new ResponseEntity<>(alunoService.salvarAluno(aluno, primeiroSave), HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/login")

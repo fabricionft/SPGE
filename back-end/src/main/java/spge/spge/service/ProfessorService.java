@@ -1,9 +1,12 @@
 package spge.spge.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import spge.spge.dto.request.CriarAulaRequestDTO;
 import spge.spge.dto.request.DefinirNotaRequestDTO;
+import spge.spge.dto.request.LoginProfessorRequestDTO;
+import spge.spge.dto.response.LoginProfessorResponseDTO;
 import spge.spge.exception.RequestException;
 import spge.spge.model.*;
 import spge.spge.repository.AlunoRepository;
@@ -26,6 +29,9 @@ public class ProfessorService {
     @Autowired
     private AlunoRepository aLunoRepository;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
 
     public List<ProfessorModel> listarProfessores(){
         return professorRepository.findAll();
@@ -35,14 +41,33 @@ public class ProfessorService {
         return professorRepository.buscarSalasQueOProfessorFazParte(codigo);
     }
 
+    public SalaModel buscarSalaPorCodigo(Long codigo){
+        return salaRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new RequestException("Sala inexistente!"));
+    }
+
     public ProfessorModel salvarProfessor(ProfessorModel professor){
+        professor.setSenha(encoder.encode(professor.getSenha()));
         return professorRepository.save(professor);
+    }
+
+    public LoginProfessorResponseDTO fazerLogin(LoginProfessorRequestDTO loginProfessorRequest){
+        ProfessorModel professor = buscarProfessorPorEmail(loginProfessorRequest.getEmail());
+
+        if(encoder.matches(loginProfessorRequest.getSenha(), professor.getSenha())){
+            return  new LoginProfessorResponseDTO(
+                professor.getCodigo(),
+                professor.getMateria()
+            );
+        }else{
+            throw new RequestException("Senha incorreta");
+        }
     }
 
     public SalaModel criarAula(CriarAulaRequestDTO criarAulaRequest){
         SalaModel sala = buscarSalaPorCodigo(criarAulaRequest.getCodigoSala());
         ProfessorModel professor = buscarProfessorPorCodigo(criarAulaRequest.getCodigoProfessor());
-        List<AlunoModel> alunos = salaRepository.listarAlunosEmOrdemAlfabetica(sala.getCodigo());
+        List<AlunoModel> alunos = aLunoRepository.listarAlunosDeUmaSalaEmOrdemAlfabetica(sala.getCodigo());
 
         if(!sala.getProfessores().contains(professor)){
             throw new RequestException("Desculpe, este professor não faz parte desta sala!");
@@ -121,17 +146,17 @@ public class ProfessorService {
 
 
     //Private
+    private ProfessorModel buscarProfessorPorEmail(String email){
+        return professorRepository.findByEmail(email)
+                .orElseThrow(() -> new RequestException("Professor inexistente!"));
+    }
+
     public ProfessorModel buscarProfessorPorCodigo(Long codigo){
         return professorRepository.findByCodigo(codigo)
                .orElseThrow(() -> new RequestException("Professor inexistente!"));
     }
 
-    public SalaModel buscarSalaPorCodigo(Long codigo){
-        return salaRepository.findByCodigo(codigo)
-                .orElseThrow(() -> new RequestException("Sala inexistente!"));
-    }
-
-    public AlunoModel buscarAlunoPorCodigo(Long codigo){
+    private AlunoModel buscarAlunoPorCodigo(Long codigo){
         return aLunoRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new RequestException("Aluno inexistente!"));
     }

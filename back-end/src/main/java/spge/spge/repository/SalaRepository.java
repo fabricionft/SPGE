@@ -14,6 +14,6 @@ public interface SalaRepository extends JpaRepository<SalaModel, Long> {
 
     Optional<SalaModel> findByCodigo(Long codigo);
 
-    @Query(value = "select a from Sala s inner join s.alunos a where s.codigo = :codigo order by a.nome asc")
-    List<AlunoModel> listarAlunosEmOrdemAlfabetica(Long codigo);
+    @Query(value = "select s from Sala s where s.serie = :serie and s.turma = :turma")
+    Optional<SalaModel> buscarSalaPorSerieEturma(Integer serie, Character turma);
 }

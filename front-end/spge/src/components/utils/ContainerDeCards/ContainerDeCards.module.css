@@ -1,0 +1,12 @@
+.containerDeCards{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 600px){
+  .containerDeCards{
+    justify-content: space-between;
+  }
+}

@@ -1,7 +1,9 @@
 const rotasPublicas = [
   "/",
   "/home",
-  "/loginAluno"
+  "/loginAluno",
+  "/loginProfessor",
+  "/loginFuncionario"
 ]
 
 export default rotasPublicas;

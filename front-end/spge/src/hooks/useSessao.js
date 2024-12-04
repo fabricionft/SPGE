@@ -4,9 +4,17 @@ import { SessaoContext } from "../contexts/SessaoContext";
 
 const useSessao = () => {
 
-  const {logar, deslogar, codigo} = useContext(SessaoContext); 
+  const {
+    logarAluno, deslogarAluno, sessaoAluno, codigoAluno,
+    logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, materiaProfessor,
+    logarFuncionario, deslogarFuncionario, sessaoFuncionario, codigoFuncionario
+  } = useContext(SessaoContext); 
 
-  return{logar, deslogar, codigo};
+  return{
+    logarAluno, deslogarAluno, sessaoAluno, codigoAluno,
+    logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, materiaProfessor,
+    logarFuncionario, deslogarFuncionario, sessaoFuncionario, codigoFuncionario
+  };
 }
 
 export default useSessao;

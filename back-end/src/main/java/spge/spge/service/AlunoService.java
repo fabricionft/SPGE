@@ -32,26 +32,40 @@ public class AlunoService {
         return aLunoRepository.findAll();
     }
 
+    public List<AlunoModel> listarAlunosDeUmaSalaEmOrdemAlfabetica(Long codigo){
+        return aLunoRepository.listarAlunosDeUmaSalaEmOrdemAlfabetica(codigo);
+    }
+
     public AlunoModel buscarAlunoPorCodigo(Long codigo){
         return aLunoRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new RequestException("Aluno inexistente!"));
     }
 
-    public AlunoModel salvarAluno(AlunoModel aluno){
-        if(aLunoRepository.findByEmail(aluno.getEmail()).isPresent()){
-            throw new RequestException("Desculpe, este email já esta sendo utilizado!");
-        }
+    public AlunoModel salvarAluno(AlunoModel aluno, Boolean primeiroSave){
+        if(primeiroSave){
+            if(aLunoRepository.findByEmail(aluno.getEmail()).isPresent()){
+                throw new RequestException("Desculpe, este email já esta sendo utilizado!");
+            }
 
-        if(aLunoRepository.findByCpf(aluno.getCpf()).isPresent()){
-            throw new RequestException("Desculpe, este aluno já foi cadastrado!");
-        }
+            if(aLunoRepository.findByCpf(aluno.getCpf()).isPresent()){
+                throw new RequestException("Desculpe, este aluno com este CPF já foi cadastrado!");
+            }
 
-        for(int i = 0; i <=3; i++){
-            aluno.getHistoricoDeDesempenho().add(new BimestreModel(
-                null,
-                i+1,
-                new ArrayList<DesempenhoModel>()
-            ));
+            if(aLunoRepository.findByRa(aluno.getRa()).isPresent()){
+                throw new RequestException("Desculpe, este aluno com este RA já foi cadastrado!");
+            }
+
+            if(aLunoRepository.findByMatricula(aluno.getMatricula()).isPresent()){
+                throw new RequestException("Desculpe, este aluno com esta matrícula já foi cadastrado!");
+            }
+
+            for(int i = 0; i <=3; i++){
+                aluno.getHistoricoDeDesempenho().add(new BimestreModel(
+                    null,
+                    i+1,
+                    new ArrayList<DesempenhoModel>()
+                ));
+            }
         }
 
         aluno.setSenha(encoder.encode(senhaInicial));
@@ -82,6 +96,16 @@ public class AlunoService {
     //Privados
     private AlunoModel buscarAlunoPorEmail(String email){
         return aLunoRepository.findByEmail(email)
+                .orElseThrow(() -> new RequestException("Aluno inexistente!"));
+    }
+
+    private AlunoModel buscarAlunoPorRA(String ra){
+        return aLunoRepository.findByRa(ra)
+                .orElseThrow(() -> new RequestException("Aluno inexistente!"));
+    }
+
+    private AlunoModel buscarAlunoPorMatricula(String matricula){
+        return aLunoRepository.findByMatricula(matricula)
                 .orElseThrow(() -> new RequestException("Aluno inexistente!"));
     }
 }

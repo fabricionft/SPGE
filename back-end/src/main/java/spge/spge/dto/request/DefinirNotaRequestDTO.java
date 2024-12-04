@@ -11,5 +11,5 @@ public class DefinirNotaRequestDTO {
     private Long codigoAluno;
     private Integer numeroDoBimestre;
     private String materia;
-    private Integer nota;
+    private Double nota;
 }

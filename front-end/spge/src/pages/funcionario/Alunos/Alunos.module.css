@@ -1,0 +1,42 @@
+.painelAlunos{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+  margin-top: 30px;
+}
+
+.margemPainelAlunos{
+  width: 100%;
+  margin: 30px;
+}
+
+.aluno, .alunoLegenda{
+  width: 100%;
+  display: flex;
+}
+
+.aluno div p, .alunoLegenda div p {
+  margin-left: 10px;
+}
+
+.alunoLegenda div p {
+  font-weight: bold;
+}
+
+.divisor1, .divisor2, .divisor3, .divisor4, .divisor5{
+  width: 5%;
+  display: flex;
+}
+
+.divisor2{width: 25%;}
+.divisor3{width: 17.5%;}
+.divisor4{width: 7.5%;}
+.divisor5{width: 45%;}
+
+.divisor5{
+  justify-content: space-evenly;
+}

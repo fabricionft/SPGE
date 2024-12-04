@@ -1,0 +1,16 @@
+.imgOpcao{
+  width: 80px;
+}
+
+.tituloOpcao{
+  font-size: 17px;
+  margin: 10px 0;
+  color: rgb(46, 45, 45);
+}
+
+.textoOpcao{
+  color: rgb(72, 71, 71);
+  font-size: 15px;
+  margin: 0;
+  text-align: center;
+}

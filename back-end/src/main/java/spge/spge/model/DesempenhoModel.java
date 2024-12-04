@@ -20,7 +20,7 @@ public class DesempenhoModel {
 
     private String materia;
 
-    private Integer nota;
+    private Double nota;
 
     private Integer totalDeAulas;
 

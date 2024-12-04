@@ -1,7 +1,6 @@
 .linhaInputSenha{
   width: 100%;
   position: relative;
-  border: 2px solid red;
   margin-bottom: 20px;
 }
 
@@ -13,4 +12,5 @@
   right: 10px;
   position: absolute;
   width: 22.5px;
+  cursor: pointer;
 }

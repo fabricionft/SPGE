@@ -28,14 +28,35 @@ public class SalaService {
         return salaRepository.findAll();
     }
 
+    public SalaModel buscarSalaPorCodigo(Long codigo){
+        return salaRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new RequestException("Sala inexistente"));
+    }
+
     public SalaModel criarSala(SalaRequestDTO salaRequest){
+        if(salaRepository.buscarSalaPorSerieEturma(salaRequest.getSerie(), salaRequest.getTurma()).isPresent()){
+            throw new RequestException("Desculpe, esta sala já existe!");
+        }
+
         SalaModel sala = new SalaModel();
 
         sala.setSerie(salaRequest.getSerie());
         sala.setTurma(salaRequest.getTurma());
 
-        for(MateriaModel materia: salaRequest.getMaterias()){
-            sala.getMaterias().add(materia.getMateria());
+        for(String materia: salaRequest.getMaterias()){
+            sala.getMaterias().add(materia);
+        }
+
+        return salaRepository.save(sala);
+    }
+
+    public SalaModel adicionarMateriaParaUmaSala(Long codigoSala, String materia){
+        SalaModel sala = buscarSalaPorCodigo(codigoSala);
+
+        if(sala.getMaterias().contains(materia)){
+            throw new RequestException("Esta sala já possui essa matéria!");
+        }else{
+            sala.getMaterias().add(materia);
         }
 
         return salaRepository.save(sala);
@@ -45,21 +66,30 @@ public class SalaService {
         SalaModel sala = buscarSalaPorCodigo(codigoSala);
         AlunoModel aluno = buscarAlunoPorCodigo(codigoAluno);
 
-        if(sala.getAlunos().contains(aluno)){
+        if(sala.getAlunos().contains(aluno)) {
             throw new RequestException("Desculpe, este aluno já faz parte desta sala!");
-        }else {
+        }
+        else if(aLunoRepository.buscarAlunoNasSalasPorCodigo(aluno.getCodigo()).isPresent()){
+            throw new RequestException("Desculpe, este aluno já faz parte de uma sala!");
+        }
+        else {
             for (BimestreModel bimestre: aluno.getHistoricoDeDesempenho()){
                 for(String materia: sala.getMaterias()){
-                    bimestre.getDesempenho().add(new DesempenhoModel(
-                        null,
-                        materia,
-                        0,//Nota
-                        0,//Total de presenças
-                        0//Total de aulas
-                    ));
+                    if(aLunoRepository.buscarDesempenhoEspecificoEmBimestreEspecificoDeUmAluno(
+                        aluno.getCodigo(), bimestre.getNumeroDoBimestre(), materia
+                    ).isEmpty()) {
+                        bimestre.getDesempenho().add(new DesempenhoModel(
+                                null,
+                                materia,
+                                0.0,//Nota
+                                0,//Total de presenças
+                                0//Total de aulas
+                        ));
+                    }
                 };
             }
 
+            aluno.setSala(String.valueOf(sala.getSerie()+""+sala.getTurma()));
             sala.getAlunos().add(aluno);
         }
 
@@ -73,8 +103,8 @@ public class SalaService {
         AlunoModel aluno = buscarAlunoPorCodigo(codigoAluno);
 
         if(sala.getAlunos().contains(aluno)) {
+            aluno.setSala("Sem");
             sala.getAlunos().remove(aluno);
-
             sala.setQuantidadeDeAlunos(sala.getQuantidadeDeAlunos() - 1);
             return salaRepository.save(sala);
         }else{
@@ -121,11 +151,6 @@ public class SalaService {
 
 
     //Private
-    private SalaModel buscarSalaPorCodigo(Long codigo){
-        return salaRepository.findByCodigo(codigo)
-                .orElseThrow(() -> new RequestException("Sala inexistente"));
-    }
-
     private AlunoModel buscarAlunoPorCodigo(Long codigo){
         return aLunoRepository.findByCodigo(codigo)
                .orElseThrow(() -> new RequestException("Aluno inexistente"));

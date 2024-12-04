@@ -21,23 +21,25 @@ public class AlunoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
+    private String sala = "Sem";
+
     private String nome;
 
     private String rg;
 
-    @Column(length = 11)
     private String cpf;
 
     private String nomeDaMae;
 
     private String nomeDoPai;
 
-    private String dataDeNascimento;
+    private String mes;
+    private String dia;
+    private String ano;
 
-    @Column(length = 11)
-    private Integer ra;
+    private String ra;
 
-    private Integer matricula;
+    private String matricula;
 
     //Login
     private String email;
@@ -50,7 +52,7 @@ public class AlunoModel {
     private String bairro;
     private String rua;
     private Integer numero;
-    private String complemento;
+    private String complemento = "Sem complemento";
 
     //Desempenho
     @OneToMany(cascade = CascadeType.ALL)

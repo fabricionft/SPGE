@@ -1,0 +1,13 @@
+.linha{
+  display: flex;
+  align-items: center;
+}
+
+.linha input{
+  width: 20px;
+  margin: 0;
+}
+
+.linha p{
+  margin: 0 0 0 8px;
+}

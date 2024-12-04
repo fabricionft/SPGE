@@ -3,6 +3,8 @@ package spge.spge.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import spge.spge.dto.request.LoginFuncionarioRequestDTO;
+import spge.spge.dto.response.LoginFuncionarioResponseDTO;
 import spge.spge.exception.RequestException;
 import spge.spge.model.FuncionarioModel;
 import spge.spge.repository.FuncionarioRepository;
@@ -36,6 +38,19 @@ public class FuncionarioService {
 
         return funcionarioRepository.save(funcionario);
     }
+
+    public LoginFuncionarioResponseDTO fazerLogin(LoginFuncionarioRequestDTO loginFuncionarioRequest){
+        FuncionarioModel funcionario = buscarUSuarioPorEmail(loginFuncionarioRequest.getEmail());
+
+        if(encoder.matches(loginFuncionarioRequest.getSenha(), funcionario.getSenha())){
+            return  new LoginFuncionarioResponseDTO(
+                    funcionario.getCodigo()
+            );
+        }else{
+            throw new RequestException("Senha incorreta!");
+        }
+    }
+
 
     //Private
     private FuncionarioModel buscarUSuarioPorEmail(String email){

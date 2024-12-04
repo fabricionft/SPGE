@@ -1,0 +1,34 @@
+.cabecalhoFormulario{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.cabecalhoFormulario p{
+  font-weight: bold;
+  margin: 0;
+  font-size: 18px;
+}
+
+.linhaDataDeNascimento{
+  display: flex;
+}
+
+.linhaDataDeNascimento select:nth-child(2){
+  margin: 0 10px;
+}
+
+.linhaCep{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.linhaCep input, .linhaCep button{margin: 0;}
+
+.linhaCep button{
+  width: 150px;
+  margin-left: 10px;
+}

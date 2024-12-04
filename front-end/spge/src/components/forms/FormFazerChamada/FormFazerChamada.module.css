@@ -1,0 +1,19 @@
+.listaChamada{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.listaChamada p{
+  margin: 0;
+}
+
+.faltaOuPresenca{
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: red;
+}

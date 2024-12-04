@@ -15,6 +15,8 @@ public interface ProfessorRepository extends JpaRepository<ProfessorModel, Long>
 
     Optional<ProfessorModel> findByCodigo(Long codigo);
 
+    Optional<ProfessorModel> findByEmail(String email);
+
     @Query(value = "select s from Sala s inner join s.professores p where p.codigo = :codigo")
     List<SalaModel> buscarSalasQueOProfessorFazParte(Long codigo);
 

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spge.spge.config.ModelMapperConfig;
+import spge.spge.dto.request.LoginFuncionarioRequestDTO;
 import spge.spge.dto.response.FuncionarioResponseDTO;
 import spge.spge.model.FuncionarioModel;
 import spge.spge.service.FuncionarioService;
@@ -37,6 +38,11 @@ public class FuncionarioController {
     @PostMapping
     public ResponseEntity<?> salvarFuncionario(@RequestBody FuncionarioModel funcionario){
         return new ResponseEntity<>(converterModelEmResponseDTO(funcionarioService.salvarFuncionario(funcionario)), HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<?> fazerLogin(@RequestBody LoginFuncionarioRequestDTO loginFuncionarioRequest){
+        return new ResponseEntity<>(funcionarioService.fazerLogin(loginFuncionarioRequest), HttpStatus.OK);
     }
 
 

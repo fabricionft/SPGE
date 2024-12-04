@@ -23,9 +23,20 @@ public class SalaController {
         return new ResponseEntity<>(salaService.listarSalas(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/{codigo}")
+    public ResponseEntity<?> buscarSalaPorCodigo(@PathVariable  Long codigo){
+        return new ResponseEntity<>(salaService.buscarSalaPorCodigo(codigo), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> criarSala(@RequestBody SalaRequestDTO salaRequestDTO){
         return new ResponseEntity<>(salaService.criarSala(salaRequestDTO), HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/codigoSala/{codigoSala}/materia/{materia}")
+    public  ResponseEntity<?> adicionarMateriaParaUmaSala(@PathVariable Long codigoSala,
+                                                          @PathVariable String materia){
+        return new ResponseEntity<>(salaService.adicionarMateriaParaUmaSala(codigoSala, materia), HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/codigoSala/{codigoSala}/codigoAluno/{codigoAluno}")

@@ -23,6 +23,10 @@ public class ProfessorModel {
 
     private String nome;
 
+    private String email;
+
+    private String senha;
+
     private String materia;
 
     @OneToMany(cascade = CascadeType.ALL)

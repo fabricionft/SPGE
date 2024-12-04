@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spge.spge.dto.request.CriarAulaRequestDTO;
 import spge.spge.dto.request.DefinirNotaRequestDTO;
+import spge.spge.dto.request.LoginProfessorRequestDTO;
 import spge.spge.model.ProfessorModel;
 import spge.spge.service.ProfessorService;
 
@@ -30,6 +31,11 @@ public class ProfessorController {
     @PostMapping
     public ResponseEntity<?> salvarProfessor(@RequestBody ProfessorModel professor){
         return new ResponseEntity<>(professorService.salvarProfessor(professor), HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/login") 
+    public ResponseEntity<?> fazerLogin(@RequestBody LoginProfessorRequestDTO loginProfessorRequest){
+        return new ResponseEntity<>(professorService.fazerLogin(loginProfessorRequest), HttpStatus.OK);
     }
 
     @PostMapping(path = "/teste")

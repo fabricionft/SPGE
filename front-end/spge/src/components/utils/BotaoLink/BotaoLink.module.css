@@ -1,8 +1,11 @@
 .botaoLink{
-  width: 120px;
+  width:fit-content;
   height: 40px;
+  padding: 0 20px;
+  margin: 0 10px;
   color: #fff;
   display: flex;
+  text-align: center;
   align-items: center;
   justify-content: center;
   text-decoration: none;
@@ -13,6 +16,7 @@
   font-weight: bold;
   font-size: 15px;
 }
+.botaoLink:nth-child(2){margin-left: 0;}
 
 .botaoLink:hover{
   filter: brightness(90%);

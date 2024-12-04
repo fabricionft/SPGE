@@ -1,0 +1,115 @@
+.nomeDaSala{
+  text-transform: capitalize;
+  font-size: 25px;
+  color: #333131;
+}
+
+.botoesSala{
+  display: flex;
+}
+
+.atalhosSala{
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.atalhosSala p{
+  padding: 5px;
+  margin: 0;
+  font-weight: bold;
+  border: 3px solid var(--primaria);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.atalhosSala p:nth-child(2){margin: 0 10px;}
+
+.selecionado{
+  background-color: var(--primaria);
+  color: #fff;
+}
+
+.botoesSala button{
+  margin-left: 20px;
+}
+
+.botoesSala button:nth-child(1){
+  margin-left: 0;
+}
+
+.painelAlunos{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: var(--card);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+  border-radius: 7.5px;
+}
+
+.margemPainelAlunos{
+  width: 100%;
+  margin: 25px;
+}
+
+.aluno, .alunoLegenda{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.aluno div{ height: 50px;}
+.alunoLegenda p{font-weight: bold;}
+
+.par{
+  background-color: rgb(237, 247, 255);
+}
+
+.divisorAluno{
+  width: 10%;
+  display: flex;
+  align-items: center;
+}
+
+.divisorAluno:nth-child(2){width: 22.5%;}
+.divisorAluno:nth-child(3){width: 15%;}
+.divisorAluno:nth-child(4){width: 22.5%;}
+
+.divisorAluno p, .divisorAluno strong{
+  margin:  0 0 0 15px;
+}
+
+.divisorBotoesAluno{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.divisorBotoesAluno button{
+  margin: 0 10px;
+}
+
+@media screen and (max-width: 1000px) {
+  .aluno div{ height: 40px;}
+
+  .alunoLegenda div:nth-child(5){display: none;}
+
+  .divisorAluno:nth-child(2){width: 35%;}
+  .divisorAluno:nth-child(3){width: 20%;}
+  .divisorAluno:nth-child(4){width: 35%;}
+  .divisorBotoesAluno{width: 100%;}
+}
+
+@media screen and (max-width: 600px) {
+  .alunoLegenda{margin-bottom: 10px;}
+
+  .divisorAluno:nth-child(2){
+    width: 89%;
+  }
+
+  .divisorAluno:nth-child(3), .divisorAluno:nth-child(4), .divisorBotoesAluno{
+    width: 100%;
+  }
+}

@@ -1,10 +1,12 @@
 body{
   margin: 0;
   padding: 0;
+  background-color: var(--fundo);
 }
 
 *{
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
 }
 
 form{
@@ -13,21 +15,28 @@ form{
   flex-direction: column;
 }
 
-input, button{
+form button{
+  margin-top: 15px;
+}
+
+input, select, button{
   width: 100%;
   height: 40px;
   border-radius: 5px;
   text-decoration: none;
   border: none;
+  cursor: pointer;
 }
 
-input{
+input, select{
   width: calc(100% - 12px);
   margin-bottom: 20px;
-  background-color: rgb(237, 244, 253);
+  background-color: rgb(255, 255, 255);
   padding-left: 10px;
   border: 1px solid rgb(201, 201, 249);
 }
+
+select{width: 100%;}
 
 button{
   background-color: var(--primaria);
@@ -43,8 +52,24 @@ img{
   filter: brightness(30%);
 }
 
+.desativado{
+  filter: brightness(80%);
+}
+
+.desativado:hover{
+  filter: brightness(80%);
+  cursor: initial;
+}
 
 :root{
+  --fundo: rgb(250, 250, 250);
   --sobreposicao: rgba(0, 0, 0, 0.333);
-  --primaria: rgb(34, 104, 233);
+  --primaria: rgb(61, 127, 250);
+  --card: rgb(255, 255, 255);
+}
+
+@media screen and (max-width: 500px) {
+  form{
+    width: 100%;
+  }
 }

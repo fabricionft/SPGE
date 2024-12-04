@@ -1,0 +1,37 @@
+.painelDados{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+  border-radius: 7.5px;
+}
+
+.margemPainelDados{
+  width: 100%;
+  margin: 25px;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.divisor{
+  display: flex;
+  margin: 0 25px 0 0;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.divisor p{
+  margin: 0;
+}
+
+.divisor p:nth-child(1){
+  color: var(--primaria);
+  font-weight: bold;
+}
+
+@media screen and (max-width: 600px){
+  .divisor{width: 100%;}
+}

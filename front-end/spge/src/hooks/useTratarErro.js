@@ -1,8 +1,18 @@
+import useLoader from "./useLoader";
+import useMessageBox from "./useMessageBox";
+
 const useTratarErro = () => {
 
-  const tratarErro = (erro) => {
+  const {exibirMessageBox} = useMessageBox();
+  const {esconderCardLoader} = useLoader();
 
-    console.log(erro.response.data.message)
+  const tratarErro = (destino, error) => {
+    exibirMessageBox(
+      destino,
+      error.response.data.message,
+      1
+    );
+    esconderCardLoader();
   }
 
   return{tratarErro};
