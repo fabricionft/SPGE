@@ -15,5 +15,9 @@
   height: 30px;
   border-radius: 5px;
   cursor: pointer;
-  background-color: red;
+  background-color: var(--erro);
+}
+
+.presente{
+  background-color: var(--sucesso);
 }

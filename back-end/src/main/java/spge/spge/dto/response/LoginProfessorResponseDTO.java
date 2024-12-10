@@ -12,5 +12,6 @@ import lombok.Setter;
 public class LoginProfessorResponseDTO {
 
     private Long codigo;
+    private String nome;
     private String materia;
 }

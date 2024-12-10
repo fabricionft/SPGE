@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useTratarErro from "./useTratarErro";
 import api from "../services/api";
 import useLoader from "./useLoader";
@@ -15,8 +15,58 @@ const useProfessor = () => {
   const {exibirMessageBox} = useMessageBox();
   const {logarProfessor, codigoProfessor, materiaProfessor} = useSessao();
   const {rotaPassada} = useRotas();
+  const {codigoProfessorParam, codigoAlunoParam} = useParams();
+
 
   const preencherProfessor = (e) => {setProfessor({...professor, [e.target.name] : e.target.value})};
+
+
+  if(codigoProfessorParam){
+    useEffect(() => {
+      api.get("/professor/".concat(codigoProfessorParam))
+      .then((resp) => {
+        setProfessor(resp.data);
+      })
+      .catch((error) => {
+        tratarErro('', error);
+      });
+    }, []);
+  }
+
+  const salvarProfessor = () => {
+    exibirCardLoader();
+    api.post("/professor/".concat(location.pathname == "/adicionarProfessor"), {
+      email: professor.email.trim(),
+      ...professor
+    })
+    .then(() => {
+      esconderCardLoader();
+      exibirMessageBox(
+        '/professores',
+        "Professor salvo com sucesso!",
+        0
+      );
+    })
+    .catch((error) => {
+      tratarErro('', error);
+    })
+  }
+
+  const excluieProfessor = (codigo) => {
+    exibirCardLoader();
+    api.delete("/professor/".concat(codigo))
+    .then((resp) => {
+      esconderCardLoader();
+      exibirMessageBox(
+        '',
+        resp.data,
+        0
+      );
+    })
+    .catch((error) => {
+      tratarErro('', error);
+    })
+  }
 
   const fazerLogin = () => {
     exibirCardLoader();
@@ -40,8 +90,6 @@ const useProfessor = () => {
 
 
   //Ações para alunos
-  const {codigoAlunoParam} = useParams();
-
   const [definirNota, setDefinirNota] = useState({
     codigoProfessor: codigoProfessor,
     codigoAluno: codigoAlunoParam,
@@ -71,8 +119,6 @@ const useProfessor = () => {
 
   const [listaDepresencas, setListaDePresencas] = useState([]);
 
-  
-
 
 
   //Envio de formulários
@@ -81,13 +127,18 @@ const useProfessor = () => {
     fazerLogin();
   }
 
+  const enviarFormularioSalvarProfessor = (e) => {
+    e.preventDefault();
+    salvarProfessor();
+  }
+
   const enviarFormularioDefinirNota = (e) => {
     e.preventDefault();
     definirNotaParaOAluno();
   }
 
   return{
-    professor, preencherProfessor, enviarFormularioFazerLogin,
+    professor, preencherProfessor, enviarFormularioSalvarProfessor, enviarFormularioFazerLogin, excluieProfessor,
     definirNota, preecnherDefinirNota, enviarFormularioDefinirNota
   };
 }

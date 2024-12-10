@@ -27,4 +27,23 @@ public class MateriaService {
 
         return materiaRepository.save(materia);
     }
+
+    public String apagarMateriaPorCodigo(Long codigo){
+        MateriaModel materia = buscarMateriaPorCodigo(codigo);
+
+        materiaRepository.delete(materia);
+        return "Matéria excluída com sucesso!";
+    }
+
+    public String apagarTodasMaterias(){
+        materiaRepository.deleteAll();
+        return "Matérias excluídas com sucesso!";
+    }
+
+
+    //Privados
+    private MateriaModel buscarMateriaPorCodigo(Long codigo){
+        return  materiaRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new RequestException("Matéria inexistente!"));
+    }
 }

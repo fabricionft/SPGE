@@ -1,7 +1,8 @@
 const rotasDeAluno = [
   "/menuAluno",
   "/notasAluno",
-  "/dadosAluno"
+  "/dadosAluno",
+  "/recadosAluno"
 ]
 
 export default rotasDeAluno;

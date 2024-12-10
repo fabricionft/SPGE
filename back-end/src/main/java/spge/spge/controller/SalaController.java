@@ -28,6 +28,11 @@ public class SalaController {
         return new ResponseEntity<>(salaService.buscarSalaPorCodigo(codigo), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/listaDeChamada/{codigo}")
+    public ResponseEntity<?> gerarListaDePresencaVaziaParaUmaSala(@PathVariable Long codigo){
+        return new ResponseEntity<>(salaService.gerarListaDePresencaVaziaParaUmaSala(codigo), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> criarSala(@RequestBody SalaRequestDTO salaRequestDTO){
         return new ResponseEntity<>(salaService.criarSala(salaRequestDTO), HttpStatus.CREATED);
@@ -39,13 +44,13 @@ public class SalaController {
         return new ResponseEntity<>(salaService.adicionarMateriaParaUmaSala(codigoSala, materia), HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/codigoSala/{codigoSala}/codigoAluno/{codigoAluno}")
+    @PostMapping(path = "/adicionar/codigoSala/{codigoSala}/codigoAluno/{codigoAluno}")
     public  ResponseEntity<?> adicionarAlunoEmUmaSala(@PathVariable Long codigoSala,
                                                       @PathVariable Long codigoAluno){
         return new ResponseEntity<>(salaService.adicionarAlunoEmUmaSala(codigoSala, codigoAluno), HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/codigoSala/{codigoSala}/codigoProfessor/{codigoProfessor}")
+    @PostMapping(path = "/adicionar/codigoSala/{codigoSala}/codigoProfessor/{codigoProfessor}")
     public  ResponseEntity<?> adicionarProfessorEmUmaSala(@PathVariable Long codigoSala,
                                                           @PathVariable Long codigoProfessor){
         return new ResponseEntity<>(salaService.adicionarProfessorEmUmaSala(codigoSala, codigoProfessor), HttpStatus.CREATED);

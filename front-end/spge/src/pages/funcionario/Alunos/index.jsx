@@ -52,10 +52,10 @@ export default function Alunos(){
             </div>
 
             {
-              alunos.map((aluno) => (
+              alunos.map((aluno, index) => (
                 <div
                   key={aluno.codigo}
-                  className={styles.aluno}
+                  className={styles.aluno+" "+[(index % 2 == 0) && "par"]}
                 >
                   <div className={styles.divisor1}>
                     <p>{aluno.codigo}</p>
@@ -77,11 +77,13 @@ export default function Alunos(){
                     <BotaoLink
                       destino={"/aluno/".concat(aluno.codigo)}
                       msg={"Ver dados"}
+                      margemNaDireia={true}
                     />
 
                     <BotaoLink
                       destino={"/editarAluno/".concat(aluno.codigo)}
                       msg={"Editar"}
+                      margemNaDireia={true}
                     />
 
                     <button

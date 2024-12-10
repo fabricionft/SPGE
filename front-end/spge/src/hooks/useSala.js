@@ -8,10 +8,11 @@ import useMessageBox from "./useMessageBox.js";
 const useSala = () => {
 
   const [sala, setSala] = useState({
+    periodo: "escolha",
     serie: "escolha",
     turma: "escolha"
   });
-  const {codigoSala} = useParams();
+  const {codigoSalaParam} = useParams();
   const {tratarErro} = useTratarErro(); 
   const {exibirCardLoader, esconderCardLoader} = useLoader();
   const {exibirMessageBox} = useMessageBox();
@@ -39,10 +40,73 @@ const useSala = () => {
     })
   }
 
+  const adicionarAlunoEmUmaSala = (codigoSala, codigoAluno) => {
+    exibirCardLoader();
+    api.post("/sala/adicionar/codigoSala/"+codigoSala+"/codigoAluno/".concat(codigoAluno))
+    .then(() => {
+      esconderCardLoader();
+      exibirMessageBox(
+        '/sala/'.concat(codigoSala),
+        "Aluno adicionado com sucesso!",
+        0
+      );
+    })
+    .catch((error) => {
+      tratarErro('', error);
+    });
+  }
 
-  if(codigoSala){
+  const removerAlunoDeUmaSala = (codigoSala, codigoAluno) => {
+    exibirCardLoader();
+    api.put("/sala/remover/codigoSala/"+codigoSala+"/codigoAluno/".concat(codigoAluno))
+    .then(() => {
+      esconderCardLoader();
+      exibirMessageBox(
+        '/sala/'.concat(codigoSala),
+        "Aluno removido com sucesso!",
+        0
+      );
+    })
+    .catch((error) => {
+      tratarErro('', error);
+    });
+  }
+
+  const adicionarProfessorEmUmaSala = (codigoSala, codigoProfessor) => {
+    exibirCardLoader();
+    api.post("/sala/adicionar/codigoSala/"+codigoSala+"/codigoProfessor/".concat(codigoProfessor))
+    .then(() => {
+      esconderCardLoader();
+      exibirMessageBox(
+        '/sala/'.concat(codigoSala),
+        "Professor adicionado com sucesso!",
+        0
+      );
+    })
+    .catch((error) => {
+      tratarErro('', error);
+    });
+  }
+
+  const removerProfessorDeUmaSala = (codigoSala, codigoProfessor) => {
+    exibirCardLoader();
+    api.put("/sala/remover/codigoSala/"+codigoSala+"/codigoProfessor/".concat(codigoProfessor))
+    .then(() => {
+      esconderCardLoader();
+      exibirMessageBox(
+        '/sala/'.concat(codigoSala),
+        "Professor removido com sucesso!",
+        0
+      );
+    })
+    .catch((error) => {
+      tratarErro('', error);
+    });
+  }
+
+  if(codigoSalaParam){
     useEffect(() => {
-      api.get("/sala/".concat(codigoSala))
+      api.get("/sala/".concat(codigoSalaParam))
       .then((resp) => {
         setSala(resp.data);
       })
@@ -59,9 +123,20 @@ const useSala = () => {
     criarSala(listaDeMaterias);
   }
 
+  const enviarFormularioAdicionarAlunoEmUmaSala = (e, codigoSala, codigoAluno) => {
+    e.preventDefault();
+    adicionarAlunoEmUmaSala(codigoSala, codigoAluno);
+  }
+
+  const enviarFormularioAdicionarProfessorEmUmaSala = (e, codigoSala, codigoProfessor) => {
+    e.preventDefault();
+    adicionarProfessorEmUmaSala(codigoSala, codigoProfessor);
+  }
+
   return{
     sala, setSala, preencherSala,
-    enviarFormularioCriarSala
+    enviarFormularioCriarSala, enviarFormularioAdicionarAlunoEmUmaSala, enviarFormularioAdicionarProfessorEmUmaSala,
+    removerAlunoDeUmaSala, removerProfessorDeUmaSala
   };
 }
 

@@ -9,6 +9,7 @@ import spge.spge.repository.AlunoRepository;
 import spge.spge.repository.ProfessorRepository;
 import spge.spge.repository.SalaRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,6 +34,17 @@ public class SalaService {
                 .orElseThrow(() -> new RequestException("Sala inexistente"));
     }
 
+    public List<String> gerarListaDePresencaVaziaParaUmaSala(Long codigoSala){
+        SalaModel sala = buscarSalaPorCodigo(codigoSala);
+        List<String> listaDePresenca = new ArrayList<>();
+
+        for(AlunoModel aluno: aLunoRepository.listarAlunosDeUmaSala(sala.getCodigo())){
+            listaDePresenca.add("F");
+        }
+
+        return listaDePresenca;
+    }
+
     public SalaModel criarSala(SalaRequestDTO salaRequest){
         if(salaRepository.buscarSalaPorSerieEturma(salaRequest.getSerie(), salaRequest.getTurma()).isPresent()){
             throw new RequestException("Desculpe, esta sala já existe!");
@@ -40,6 +52,7 @@ public class SalaService {
 
         SalaModel sala = new SalaModel();
 
+        sala.setPeriodo(salaRequest.getPeriodo());
         sala.setSerie(salaRequest.getSerie());
         sala.setTurma(salaRequest.getTurma());
 
@@ -79,11 +92,11 @@ public class SalaService {
                         aluno.getCodigo(), bimestre.getNumeroDoBimestre(), materia
                     ).isEmpty()) {
                         bimestre.getDesempenho().add(new DesempenhoModel(
-                                null,
-                                materia,
-                                0.0,//Nota
-                                0,//Total de presenças
-                                0//Total de aulas
+                            null,
+                            materia,
+                            0.0,//Nota
+                            0,//Total de presenças
+                            0//Total de aulas
                         ));
                     }
                 };

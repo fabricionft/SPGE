@@ -1,0 +1,91 @@
+.painelAulas{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.aula{
+  width: 100%;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.aula summary{
+  cursor: pointer;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+  border-radius: 5px;
+  background-color: var(--card);
+}
+
+.aula summary p{
+  text-transform: capitalize;
+  margin: 0 10px;
+}
+
+
+.aula p{
+  margin: 10px;
+}
+
+.verMais{
+  cursor: pointer;
+  background-color: var(--primaria);
+  color: #fff;
+  height: 50px;
+  border-radius: 5px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.verMais:hover{
+  filter: brightness(90%);
+}
+
+.listaDePresenca{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: var(--card);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.margemListaDePresenca{
+  width: 100%;
+  margin: 25px;
+}
+
+.presenca{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.presenca p{
+  margin: 15px 10px;
+}
+
+.faltaOuPresenca{
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: var(--erro);
+  margin-right: 10px;
+}
+
+.presente{
+  background-color: var(--sucesso);
+}

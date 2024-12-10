@@ -7,13 +7,23 @@ import useSessao from '../../../hooks/useSessao';
 import Loader from '../../../components/utils/Loader';
 import ListaDeEntidades from '../../../components/utils/ListaDeEntidades';
 import { useState } from 'react';
+import useAlunos from '../../../hooks/useAlunos';
+import useRenderizacao from '../../../hooks/useRenderizacao';
+import useRecados from '../../../hooks/useRecados';
+import ListaDeRecados from '../../../components/utils/ListaDeRecados';
+import useAulaa from '../../../hooks/useAulas';
+import ListaDeAulas from '../../../components/utils/ListaDeAulas';
+import ContainerDeBotoes from '../../../components/utils/ContainerDeBotoes';
 
 export default function SalaDoProfessor(){
 
   //const {id} = useParams();
   const {sala} = useSala();
   const {materiaProfessor} = useSessao();
-  const [exibirConteudo, setExibirConteudo] = useState("alunos");
+  const {alunos} = useAlunos();
+  const {renderizarDeterminadoConteudo, setRenderizarDeterminadoConteudo} = useRenderizacao();
+  const {recados} = useRecados();
+  const {aulas} = useAulaa();
 
   return(
     <Container>
@@ -26,45 +36,47 @@ export default function SalaDoProfessor(){
           <>
             <h1 className={styles.nomeDaSala}>{sala.serie}{sala.turma} - {materiaProfessor}</h1>
 
-            <div className={styles.botoesSala}>
+            <ContainerDeBotoes>
               <BotaoLink
-                destino={"/fazerChamada/".concat(sala.codigo)}
-                msg={"Fazer chamada"}
-              />
-              
-              <BotaoLink
-                destino={"/fazerChamada/".concat(sala.codigo)}
-                msg={"Enviar recado geral"}
-              />
-            </div>
+                  destino={"/fazerChamada/".concat(sala.codigo)}
+                  msg={"Fazer chamada"}
+                  margemNaDireia={true}
+                  margemEmBaixo={true}
+                />
+                
+                <BotaoLink
+                  destino={"/enviarRecadoParaSala/".concat(sala.codigo)}
+                  msg={"Enviar recado geral"}
+                />
+            </ContainerDeBotoes>
 
             <div className={styles.atalhosSala}>
               <p 
-                className={styles[(exibirConteudo == "alunos") && "selecionado"]}
-                onClick={() => setExibirConteudo('alunos')}  
+                className={styles[(renderizarDeterminadoConteudo == "alunos") && "selecionado"]}
+                onClick={() => setRenderizarDeterminadoConteudo('alunos')}  
               >
                 Alunos
               </p>
 
               <p
-                className={styles[(exibirConteudo == "recados") && "selecionado"]}
-                onClick={() => setExibirConteudo('recados')}  
+                className={styles[(renderizarDeterminadoConteudo == "recados") && "selecionado"]}
+                onClick={() => setRenderizarDeterminadoConteudo('recados')}  
               >
                 Recados
               </p>
 
               <p
-                className={styles[(exibirConteudo == "aulas") && "selecionado"]}
-                onClick={() => setExibirConteudo('aulas')}  
+                className={styles[(renderizarDeterminadoConteudo == "aulas") && "selecionado"]}
+                onClick={() => setRenderizarDeterminadoConteudo('aulas')}  
               >
                 Aulas
               </p>
             </div>
 
             {
-              exibirConteudo == "alunos" ? (
+              renderizarDeterminadoConteudo == "alunos" ? (
                 <ListaDeEntidades
-                  entidade={sala.alunos}
+                  entidade={alunos}
                   nomeEntidade={"alunos"}
                 >
                   <div className={styles.painelAlunos}>
@@ -93,7 +105,7 @@ export default function SalaDoProfessor(){
                       </div>
 
                       {
-                        sala.alunos.map((aluno, index) => (
+                        alunos.map((aluno, index) => (
                           <div
                             key={aluno.codigo}
                             className={styles.aluno+" "+styles[(index % 2 == 0) && "par"]}
@@ -133,7 +145,7 @@ export default function SalaDoProfessor(){
                               />
 
                               <BotaoLink
-                                destino={"/definirNota/".concat(aluno.codigo)}
+                                destino={"/enviarRecadoParaAluno/".concat(aluno.codigo)}
                                 msg={"Recado individual"}
                               />
                             </div>
@@ -143,10 +155,14 @@ export default function SalaDoProfessor(){
                     </div>  
                   </div>  
                 </ListaDeEntidades>
-              ) : exibirConteudo == "recados" ? (
-                <>Recados</>
-              ) : exibirConteudo == "aulas" && (
-                <>Aulas</>
+              ) : renderizarDeterminadoConteudo == "recados" ? (
+                <ListaDeRecados
+                  recados={recados}
+                />
+              ) : renderizarDeterminadoConteudo == "aulas" && (
+                <ListaDeAulas
+                  aulas={aulas}
+                />
               )
             }
              

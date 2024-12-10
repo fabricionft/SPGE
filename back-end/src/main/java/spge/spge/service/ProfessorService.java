@@ -1,9 +1,10 @@
 package spge.spge.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import spge.spge.dto.request.CriarAulaRequestDTO;
+import spge.spge.dto.request.FazerChamadaRequestDTO;
 import spge.spge.dto.request.DefinirNotaRequestDTO;
 import spge.spge.dto.request.LoginProfessorRequestDTO;
 import spge.spge.dto.response.LoginProfessorResponseDTO;
@@ -14,6 +15,7 @@ import spge.spge.repository.ProfessorRepository;
 import spge.spge.repository.SalaRepository;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,9 +34,34 @@ public class ProfessorService {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Value("${senha.inicial.professor}")
+    private String senhaInicial;
+
 
     public List<ProfessorModel> listarProfessores(){
         return professorRepository.findAll();
+    }
+
+    public List<ProfessorModel> listarProfessoresDeumaSala(Long codigoSala){
+        return professorRepository.listarProfessoresDeUmaSala(codigoSala);
+    }
+
+    public  List<ProfessorModel> listarProfessoresQueNaoFazemParteDeDeterminadaSala(Long codigoSala){
+        SalaModel sala = buscarSalaPorCodigo(codigoSala);
+        List<ProfessorModel> professoresQueNaoFazemParteDaSala = new ArrayList<>();
+
+        for(ProfessorModel professor: professorRepository.findAll()){
+            if(professorRepository.buscarProfessorEmDeterminadaSala(sala.getCodigo()).isEmpty()){
+                professoresQueNaoFazemParteDaSala.add(professor);
+            }
+        }
+
+        return professoresQueNaoFazemParteDaSala;
+    }
+
+    public ProfessorModel buscarProfessorPorCodigo(Long codigo){
+        return professorRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new RequestException("Professor inexistente!"));
     }
 
     public List<SalaModel> buscarSalasDeUmProfessor(Long codigo){
@@ -46,8 +73,20 @@ public class ProfessorService {
                 .orElseThrow(() -> new RequestException("Sala inexistente!"));
     }
 
-    public ProfessorModel salvarProfessor(ProfessorModel professor){
-        professor.setSenha(encoder.encode(professor.getSenha()));
+    public ProfessorModel salvarProfessor(ProfessorModel professor, Boolean primeiroSave){
+        if(primeiroSave){
+            System.out.println(primeiroSave);
+            if(professorRepository.findByEmail(professor.getEmail()).isPresent()){
+                throw new RequestException("Desculpe, este email já esta sendo utilizado!");
+            }
+
+            if(professorRepository.buscarProfessorPorCpfEMateria(professor.getCpf(), professor.getMateria()).isPresent()){
+                throw new RequestException("Desculpe, este professor já foi cadastrado para esta matéria!");
+            }
+
+            professor.setSenha(encoder.encode(senhaInicial));
+        }
+
         return professorRepository.save(professor);
     }
 
@@ -57,6 +96,7 @@ public class ProfessorService {
         if(encoder.matches(loginProfessorRequest.getSenha(), professor.getSenha())){
             return  new LoginProfessorResponseDTO(
                 professor.getCodigo(),
+                professor.getNome(),
                 professor.getMateria()
             );
         }else{
@@ -64,52 +104,62 @@ public class ProfessorService {
         }
     }
 
-    public SalaModel criarAula(CriarAulaRequestDTO criarAulaRequest){
-        SalaModel sala = buscarSalaPorCodigo(criarAulaRequest.getCodigoSala());
-        ProfessorModel professor = buscarProfessorPorCodigo(criarAulaRequest.getCodigoProfessor());
+    public SalaModel fazerChamada(FazerChamadaRequestDTO fazerChamadaRequest){
+        SalaModel sala = buscarSalaPorCodigo(fazerChamadaRequest.getCodigoSala());
+        ProfessorModel professor = buscarProfessorPorCodigo(fazerChamadaRequest.getCodigoProfessor());
         List<AlunoModel> alunos = aLunoRepository.listarAlunosDeUmaSalaEmOrdemAlfabetica(sala.getCodigo());
 
         if(!sala.getProfessores().contains(professor)){
             throw new RequestException("Desculpe, este professor não faz parte desta sala!");
         }
 
-        if(!criarAulaRequest.getNumeroDoBimestre().equals(1) && !criarAulaRequest.getNumeroDoBimestre().equals(2) &&
-           !criarAulaRequest.getNumeroDoBimestre().equals(3) && !criarAulaRequest.getNumeroDoBimestre().equals(4)){
+        if(!fazerChamadaRequest.getNumeroDoBimestre().equals(1) && !fazerChamadaRequest.getNumeroDoBimestre().equals(2) &&
+           !fazerChamadaRequest.getNumeroDoBimestre().equals(3) && !fazerChamadaRequest.getNumeroDoBimestre().equals(4)){
             throw new RequestException("Digite um bimestre válido!");
         }
 
-        if(criarAulaRequest.getQuantidadeDeAulas() < 1){
+        if(fazerChamadaRequest.getQuantidadeDeAulas() < 1){
             throw new RequestException("A quantidade de aulas deve ser maior que 0!");
         }
 
-        if(sala.getAlunos().size() != criarAulaRequest.getPresencas().size()){
+        if(sala.getAlunos().size() != fazerChamadaRequest.getPresencas().size()){
             throw new RequestException("A lista de presença precisa ter exatamente o mesmo tamanho da lista de alunos!");
         }
 
+        List<PresencaModel> listaDePresenca = new ArrayList<>();
         int indice = 0;
         for(AlunoModel aluno: alunos){
-            if(aLunoRepository.buscarDesempenhoEspecificoEmBimestreEspecificoDeUmAluno(aluno.getCodigo(), criarAulaRequest.getNumeroDoBimestre(), professor.getMateria()).isPresent()){
+            if(aLunoRepository.buscarDesempenhoEspecificoEmBimestreEspecificoDeUmAluno(aluno.getCodigo(), fazerChamadaRequest.getNumeroDoBimestre(), professor.getMateria()).isPresent()){
                 DesempenhoModel desempenho = aLunoRepository.buscarDesempenhoEspecificoEmBimestreEspecificoDeUmAluno
                 (
                     aluno.getCodigo(),
-                    criarAulaRequest.getNumeroDoBimestre(),
+                    fazerChamadaRequest.getNumeroDoBimestre(),
                     professor.getMateria()
                 ).get();
 
-                if(criarAulaRequest.getPresencas().get(indice).equals("P")){ // P = pressente, A = ausente
-                    desempenho.setTotalDePresencas(desempenho.getTotalDePresencas() + criarAulaRequest.getQuantidadeDeAulas());
+                if(fazerChamadaRequest.getPresencas().get(indice).equals("P")){ // P = pressente, A = ausente
+                    desempenho.setTotalDePresencas(desempenho.getTotalDePresencas() + fazerChamadaRequest.getQuantidadeDeAulas());
                 }
 
-                desempenho.setTotalDeAulas(desempenho.getTotalDeAulas() + criarAulaRequest.getQuantidadeDeAulas());
+                desempenho.setTotalDeAulas(desempenho.getTotalDeAulas() + fazerChamadaRequest.getQuantidadeDeAulas());
             }
+
+            listaDePresenca.add(new PresencaModel(
+                null,
+                aluno.getNome(),
+                fazerChamadaRequest.getPresencas().get(indice)
+            ));
+
             indice++;
         }
 
         SimpleDateFormat sp = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         professor.getAulas().add(new AulaModel(
             null,
+            professor.getMateria(),
             sp.format(new Date()),
-            criarAulaRequest.getQuantidadeDeAulas()
+            fazerChamadaRequest.getQuantidadeDeAulas(),
+            listaDePresenca
         ));
 
         professorRepository.save(professor);
@@ -144,16 +194,18 @@ public class ProfessorService {
         return aLunoRepository.save(aluno);
     }
 
+    public String excluirProfessorPorCodigo(Long codigo){
+        ProfessorModel professor = buscarProfessorPorCodigo(codigo);
+
+        professorRepository.delete(professor);
+        return "Professor excluído com sucesso!";
+    }
+
 
     //Private
     private ProfessorModel buscarProfessorPorEmail(String email){
         return professorRepository.findByEmail(email)
                 .orElseThrow(() -> new RequestException("Professor inexistente!"));
-    }
-
-    public ProfessorModel buscarProfessorPorCodigo(Long codigo){
-        return professorRepository.findByCodigo(codigo)
-               .orElseThrow(() -> new RequestException("Professor inexistente!"));
     }
 
     private AlunoModel buscarAlunoPorCodigo(Long codigo){

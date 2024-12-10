@@ -3,6 +3,7 @@ import styles from './MenuAluno.module.css';
 //Assets
 import iconNotas from '../../../assets/icons/notas.png';
 import iconUsuario from '../../../assets/icons/usuario.png';
+import iconRecado from '../../../assets/icons/recado.png';
 
 //Components
 import Container from "../../../components/layout/Container/inde";
@@ -41,10 +42,10 @@ export default function MenuAluno(){
         </Card>
 
         <Card
-          destino={"/notasAluno"}
+          destino={"/recadosAluno"}
         >
           <img 
-            src={iconNotas} 
+            src={iconRecado} 
             alt="IconNotas" 
             className={styles.imgOpcao}  
           />

@@ -28,10 +28,14 @@
   margin: 0 0 20px 0;
 }
 
+.margemMessageBox button{
+  width: 100%;
+}
+
 .sucess{
-  background-color: rgb(2, 221, 155);
+  background-color: var(--sucesso)
 }
 
 .error{
-  background-color: rgb(236, 66, 66);
+  background-color: var(--erro)
 }

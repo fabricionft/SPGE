@@ -3,6 +3,7 @@ import useSessao from "./useSessao";
 import api from "../services/api";
 import useTratarErro from "./useTratarErro";
 import useLoader from "./useLoader";
+import rotasDeFuncionario from "../constants/rotasDeFuncionario";
 
 const useSalas = () => {
 
@@ -11,15 +12,18 @@ const useSalas = () => {
   const {tratarErro} = useTratarErro();
   const {alterarVisibilidadeLoader} = useLoader();
 
-  useEffect(() => {
-    api.get("/sala")
-    .then((resp) => {
-      setSalas(resp.data);
-    })
-    .catch((error) => {
-      tratarErro('', error);
-    })
-  }, []);
+  if(rotasDeFuncionario.includes(location.pathname)){
+    useEffect(() => {
+      api.get("/sala")
+      .then((resp) => {
+        setSalas(resp.data);
+        alterarVisibilidadeLoader(resp.data.length);
+      })
+      .catch((error) => {
+        tratarErro('', error);
+      });
+    }, []);
+  }
 
   if(codigoProfessor){
     useEffect(() => {

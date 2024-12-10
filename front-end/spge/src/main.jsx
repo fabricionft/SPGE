@@ -27,7 +27,7 @@ import DefinirNota from './pages/professor/DefinirNota/index.jsx';
 //Contexts
 import { SessaoProvider } from './contexts/SessaoContext.jsx';
 import { MessageBoxProvider } from './contexts/MessageBoxContext.jsx';
-import { LoaderProvider } from './contexts/LoaderProvider.jsx';
+import { LoaderProvider } from './contexts/LoaderContext.jsx';
 import MenuFuncionario from './pages/funcionario/MenuFuncionario/index.jsx';
 import Salas from './pages/funcionario/Salas/index.jsx';
 import CriarSala from './pages/funcionario/CriarSala/index.jsx';
@@ -35,6 +35,18 @@ import Alunos from './pages/funcionario/Alunos/index.jsx';
 import AdicionarAluno from './pages/funcionario/AdicionarAluno/index.jsx';
 import EditarAluno from './pages/funcionario/EditarAluno/index.jsx';
 import Aluno from './pages/funcionario/Aluno/index.jsx';
+import Materias from './pages/funcionario/Materias/index.jsx';
+import CriarMateria from './pages/funcionario/CriarMateria/index.jsx';
+import Professores from './pages/funcionario/Professores/index.jsx';
+import AdicionarProfessor from './pages/funcionario/AdicionarProfessor/index.jsx';
+import EditarProfessor from './pages/funcionario/EditarProfessor/index.jsx';
+import Sala from './pages/funcionario/Sala/index.jsx';
+import AdicionarAlunoEmUmaSala from './pages/funcionario/AdicionarAlunoEmUmaSala/index.jsx';
+import AdicionarProfessorEmUmaSala from './pages/funcionario/AdicionarProfessorEmUmaSala/index.jsx';
+import { RenderizacaoProvider } from './contexts/RenderizacaoContext.jsx';
+import RecadosAluno from './pages/aluno/RecadosAluno/index.jsx';
+import EnviarRecadoParaSala from './pages/professor/EnviarRecadoParaSala/index.jsx';
+import EnviarRecadoParaAluno from './pages/professor/EnviarRecadoParaAluno/index.jsx';
 
 
 const router = createBrowserRouter([
@@ -71,16 +83,28 @@ const router = createBrowserRouter([
         element: <NotasAluno/>
       },
       {
+        path: "/recadosAluno",
+        element: <RecadosAluno/>
+      },
+      {
         path: "/menuProfessor",
         element: <MenuProfessor/> 
       },
       {
-        path: "/salaDoProfessor/:codigoSala",
+        path: "/salaDoProfessor/:codigoSalaParam",
         element: <SalaDoProfessor/>
       },
       {
         path: "/fazerChamada/:codigoSalaParaOrdemAlfabeticaParam",
         element: <FazerChamada/>
+      },
+      {
+        path: "/enviarRecadoParaSala/:codigoSalaParam",
+        element: <EnviarRecadoParaSala/>
+      },
+      {
+        path: "/enviarRecadoParaAluno/:codigoAlunoParam",
+        element: <EnviarRecadoParaAluno/>
       },
       {
         path: "/definirNota/:codigoAlunoParam",
@@ -91,12 +115,44 @@ const router = createBrowserRouter([
         element: <MenuFuncionario/>
       },
       {
+        path: "/materias",
+        element: <Materias/>
+      },
+      {
+        path: "/criarMateria",
+        element: <CriarMateria/>
+      },
+      {
         path: "/salas",
         element: <Salas/>
       },
       {
         path: "/criarSala",
         element: <CriarSala/>
+      },
+      {
+        path: "/sala/:codigoSalaParam",
+        element: <Sala/>
+      },
+      {
+        path: "/AdicionarAlunoEmUmaSala/:codigoSalaParaAdicionarAlunoParam",
+        element: <AdicionarAlunoEmUmaSala/>
+      },
+      {
+        path: "/adicionarProfessorEmUmaSala/:codigoSalaParaAdicionarProfessorParam",
+        element: <AdicionarProfessorEmUmaSala/>
+      },
+      {
+        path: "/professores",
+        element: <Professores/>
+      },
+      {
+        path: "/adicionarProfessor",
+        element: <AdicionarProfessor/>
+      },
+      {
+        path: "/editarProfessor/:codigoProfessorParam",
+        element: <EditarProfessor/>
       },
       {
         path: "/alunos",
@@ -122,7 +178,9 @@ createRoot(document.getElementById('root')).render(
   <SessaoProvider>
     <MessageBoxProvider>
       <LoaderProvider>
-        <RouterProvider router={router}/>
+        <RenderizacaoProvider>
+          <RouterProvider router={router}/>
+        </RenderizacaoProvider>
       </LoaderProvider>
     </MessageBoxProvider>
   </SessaoProvider>

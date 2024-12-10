@@ -23,6 +23,8 @@ public class ProfessorModel {
 
     private String nome;
 
+    private String cpf;
+
     private String email;
 
     private String senha;

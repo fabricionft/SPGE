@@ -21,6 +21,16 @@ public class AlunoController {
         return new ResponseEntity<>(alunoService.listarAlunos(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/semSala")
+    public ResponseEntity<?> listarAlunosSemSala(){
+        return new ResponseEntity<>(alunoService.listarAlunosSemSala(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/listarAlunosDeUmaSala/{codigoSala}")
+    public  ResponseEntity<?> listarAlunosDeUmaSala (@PathVariable Long codigoSala){
+        return new ResponseEntity<>(alunoService.listarAlunosDeUmaSala(codigoSala), HttpStatus.OK);
+    }
+
     @GetMapping(path = "/listarAlunosDeUmaSalaEmOrdemAlfabetica/{codigoSala}")
     public  ResponseEntity<?> listarAlunosDeUmaSalaEmOrdemAlfabetica (@PathVariable Long codigoSala){
         return new ResponseEntity<>(alunoService.listarAlunosDeUmaSalaEmOrdemAlfabetica(codigoSala), HttpStatus.OK);

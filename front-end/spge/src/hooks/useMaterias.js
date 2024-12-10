@@ -10,13 +10,11 @@ const useMaterias = () => {
   useEffect(() => {
     api.get("/materia")
     .then((resp) => {
-      console.log("AQi")
       setMaterias(resp.data);
-      console.log(resp.data);
     })
     .catch((error) => {
       tratarErro('', error);
-    })
+    });
   }, []);
 
   return{materias};

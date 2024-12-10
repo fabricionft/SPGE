@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Table(name = "aulas")
 @Entity(name = "Aula")
 @NoArgsConstructor
@@ -18,6 +20,11 @@ public class AulaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
+    private String materia;
     private String data;
     private Integer quantidadeDeAulasContinuas;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "aulas_id")
+    private List<PresencaModel> listaDePresenca;
 }

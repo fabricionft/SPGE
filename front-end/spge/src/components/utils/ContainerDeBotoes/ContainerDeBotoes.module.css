@@ -1,0 +1,10 @@
+.containerBotoes{
+  width: 100%;
+  display: flex;
+}
+
+@media screen and (max-width: 400px) {
+  .containerBotoes{
+    flex-direction: column;
+  }
+}

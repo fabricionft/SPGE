@@ -8,12 +8,16 @@ import iconNotas from '../../../assets/icons/notas.png';
 import iconSala from '../../../assets/icons/iconSala.png';
 
 import useSessao from '../../../hooks/useSessao';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import rotasDeAluno from '..///../../constants/rotasDeAluno';
+import rotasDeProfessor from '..///../../constants/rotasDeProfessor';
+import rotasDeFuncionario from '..///../../constants/rotasDeFuncionario';
 
 
 export default function MenuBar(){
 
   const {sessaoAluno, sessaoProfessor, sessaoFuncionario, deslogarAluno, deslogarProfessor, deslogarFuncionario} = useSessao();
+  const location = useLocation();
   const fecharMenuBar = () => document.getElementById('menuBar').checked = false;
 
   return(
@@ -66,7 +70,7 @@ export default function MenuBar(){
             </Link>
 
             {
-              sessaoAluno && (
+              (sessaoAluno && rotasDeAluno.includes(location.pathname)) && (
                 <>
                   <Link
                     to={"/menuAluno"}
@@ -117,7 +121,7 @@ export default function MenuBar(){
             }
 
             {
-              sessaoProfessor && (
+              (sessaoProfessor && rotasDeProfessor.includes(location.pathname)) && (
                 <>
                   <Link
                     to={"/menuProfessor"}

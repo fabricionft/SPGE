@@ -38,5 +38,9 @@
 .divisor5{width: 45%;}
 
 .divisor5{
-  justify-content: space-evenly;
+  justify-content: center;
+}
+
+.aluno div button{
+  background-color: var(--erro)
 }

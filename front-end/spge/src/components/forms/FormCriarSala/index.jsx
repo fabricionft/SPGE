@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 export default function FormCriarSala(){
 
+  const periodos = ["escolha", "Matutino", "Noturno", "Integral"]
   const series = ["escolha", 6, 7, 8, 9, 1, 2, 3];
   const alfabeto = ["escolha", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
@@ -14,7 +15,7 @@ export default function FormCriarSala(){
 
   const [listaDematerias, setListaDeMaterias] = useState([]);
 
-  const teste = (materia) => { 
+  const adicionarMateria = (materia) => { 
     if(listaDematerias.includes(materia)){
       let materiasreduzidas = [...listaDematerias];
       materiasreduzidas.splice(listaDematerias.indexOf(materia), 1);
@@ -23,9 +24,26 @@ export default function FormCriarSala(){
       setListaDeMaterias(listaAnterior => [...listaAnterior, materia])
     }
   }
-
+  
   return(
     <form onSubmit={(e) => enviarFormularioCriarSala(e, listaDematerias)}>
+      <label>Período</label>
+      <select
+        name="periodo"
+        onChange={(e) => preencherSala(e)}
+      >
+         {
+          periodos.map((periodo, index) => (
+            <option
+              key={index}
+              value={periodo}
+            >
+              {periodo}
+            </option>
+          ))
+        }
+      </select>
+
       <label>Série</label>
       <select
         name="serie"
@@ -72,7 +90,7 @@ export default function FormCriarSala(){
                 >
                   <input 
                     type="checkbox"
-                    onClick={() => teste(materia.materia)}
+                    onClick={() => adicionarMateria(materia.materia)}
                   />
                   <p 
                     key={index}
@@ -89,8 +107,8 @@ export default function FormCriarSala(){
       }
 
       <button
-        className={[(sala.serie == "escolha" || sala.turma == "escolha") ? "desativado" : ""]}
-        disabled={(sala.serie == "escolha" || sala.turma == "escolha") ? true : false}
+        className={[(sala.periodo == "escolha" || sala.serie == "escolha" || sala.turma == "escolha") ? "desativado" : ""]}
+        disabled={(sala.periodo == "escolha" ||sala.serie == "escolha" || sala.turma == "escolha") ? true : false}
       >
         Criar
       </button>

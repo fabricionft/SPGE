@@ -21,6 +21,7 @@ public class SalaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
+    private String periodo;
     private Integer serie;
     private Character turma;
     private Integer quantidadeDeAlunos = 0;
@@ -31,6 +32,10 @@ public class SalaModel {
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     private List<ProfessorModel> professores = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "recados_id")
+    private List<RecadoModel> recados = new ArrayList<>();
 
     private List<String> materias = new ArrayList<>();
 }

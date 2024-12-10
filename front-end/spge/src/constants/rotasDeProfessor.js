@@ -2,6 +2,8 @@ const rotasDeProfessor = [
   "/menuProfessor",
   "/salaDoProfessor",
   "/fazerChamada",
+  "/enviarRecadoParaSala",
+  "/enviarRecadoParaAluno",
   "/definirNota",
 ];
 

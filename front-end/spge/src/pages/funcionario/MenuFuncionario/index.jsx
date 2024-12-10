@@ -8,12 +8,20 @@ export default function MenuFuncionario(){
     <Container>
       <ContainerDeCards>
         <Card
+          destino={"/materias"}
+        >
+          <h1>Matérias</h1>
+        </Card>
+
+        <Card
           destino={"/salas"}
         >
           <h1>Salas</h1>
         </Card>
 
-        <Card>
+        <Card
+          destino={"/professores"}
+        >
           <h1>Professores</h1>
         </Card>
 

@@ -24,4 +24,9 @@ public class MateriaController {
     public ResponseEntity<?> salvarMateria(@RequestBody MateriaModel materia){
         return new ResponseEntity<>(materiaService.salvarMateria(materia), HttpStatus.OK);
     }
+
+    @DeleteMapping(path = "/{codigo}")
+    public ResponseEntity<?> apagarMateriaPorCodigo(@PathVariable Long codigo){
+        return new ResponseEntity<>(materiaService.apagarMateriaPorCodigo(codigo), HttpStatus.OK);
+    }
 }

@@ -31,10 +31,11 @@ export default function Salas(){
           {
             salas.map((sala) => (
               <Card
-                destino={"/salas"}
+                destino={"/sala/".concat(sala.codigo)}
                 key={sala.codigo}
               >
                 <h1>
+                  {sala.periodo}
                   {sala.serie}{sala.turma}
                 </h1>
               </Card>

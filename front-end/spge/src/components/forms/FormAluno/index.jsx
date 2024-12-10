@@ -14,9 +14,7 @@ export default function FormAluno(){
   const {validarCadastroAlunoEtapa1, validarCadastroAlunoEtapa2} = useValidacao();
 
   return(
-    <form
-      onSubmit={enviarFormularioSalvarAluno}
-    >
+    <form>
       <header className={styles.cabecalhoFormulario}>
         <p>
           {
@@ -304,8 +302,10 @@ export default function FormAluno(){
               </button>
 
               <button
+                type='button'
                 className={[(!aluno.email.endsWith("@gmail.com")) && "desativado"]}
                 disabled={(!aluno.email.endsWith("@gmail.com"))}
+                onClick={(e) => enviarFormularioSalvarAluno(e)}
               >
                 Finzalizar
               </button>

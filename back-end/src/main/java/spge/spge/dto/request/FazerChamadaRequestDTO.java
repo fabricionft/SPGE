@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CriarAulaRequestDTO {
+public class FazerChamadaRequestDTO {
 
     private Long codigoSala;
     private Long codigoProfessor;

@@ -50,14 +50,18 @@ const useAluno = () => {
         ['estado'] : json.uf,
         ['cidade'] : json.localidade,
         ['bairro'] : json.bairro,
-        ['rua'] : json.logradouro
+        ['rua'] : json.logradouro,
+        ['numero'] : ''
       });
     });
   }
 
   const salvarAluno = () => {
     exibirCardLoader();
-    api.post("/aluno/".concat((location.pathname == "/adicionarAluno")), {...aluno})
+    api.post("/aluno/".concat((location.pathname == "/adicionarAluno")), {
+      email: aluno.email.trim(),
+      ...aluno
+    })
     .then(() => {
       esconderCardLoader();
       exibirMessageBox(
@@ -68,7 +72,7 @@ const useAluno = () => {
     })
     .catch((error) => {
       tratarErro('', error);
-    })
+    });
   }
   
   const fazerLogin = () => {
@@ -119,9 +123,9 @@ const useAluno = () => {
   //Dados
   const [dadosAluno, setDadosAluno] = useState({});
 
-  if(rotasDeAluno.includes(location.pathname) && sessaoAluno){
+  const buscarAlunoPorCodigo = (codigo) => {
     useEffect(() => {
-      api.get("/aluno/".concat(codigoAluno))
+      api.get("/aluno/".concat(codigo))
       .then((resp) => {
         setDadosAluno(resp.data);
       })
@@ -131,17 +135,12 @@ const useAluno = () => {
     }, []);
   }
 
-  
+  if(rotasDeAluno.includes(location.pathname) && sessaoAluno){
+    buscarAlunoPorCodigo(codigoAluno);
+  }
+
   if(codigoAlunoParam){
-    useEffect(() => {
-      api.get("/aluno/".concat(codigoAlunoParam))
-      .then((resp) => {
-        setDadosAluno(resp.data);
-      })
-      .catch((error) => {
-        tratarErro('', error);
-      });
-    }, []);
+    buscarAlunoPorCodigo(codigoAlunoParam)
   }
 
   return{

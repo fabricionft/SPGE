@@ -1,0 +1,54 @@
+.painelMaterias{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: var(--card);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+  margin-top: 30px;
+}
+
+.margemPainelMaterias{
+  width: 100%;
+  margin: 25px;
+}
+
+.materia, .materiaLegenda{
+  display: flex;
+  align-items: center;
+}
+
+.materia div, .materiaLegenda div{
+  width: 10%;
+  display: flex;
+}
+
+.materia div:nth-child(2), .materia div:nth-child(3),
+.materiaLegenda div:nth-child(2), .materiaLegenda div:nth-child(3){
+  width: 45%;
+}
+
+
+.materia div:nth-child(3), .materiaLegenda div:nth-child(3){
+  justify-content: center;
+}
+
+.materia div p{
+  margin-left: 10px;
+  text-transform: capitalize;
+}
+
+.materiaLegenda div p{
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.materiaLegenda div:nth-child(3) p{
+  margin-left: 0;
+}
+
+
+.materia div button{
+  background-color: var(--erro);
+  margin: 0;
+}

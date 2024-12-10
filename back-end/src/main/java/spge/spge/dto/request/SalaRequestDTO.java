@@ -9,6 +9,7 @@ import java.util.List;
 @Setter
 public class SalaRequestDTO {
 
+    private String periodo;
     private Integer serie;
     private Character turma;
     private List<String> materias;

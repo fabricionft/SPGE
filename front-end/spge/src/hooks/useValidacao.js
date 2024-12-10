@@ -58,6 +58,39 @@ const useValidacao = () => {
     }
   }
 
+  const validarCadastroProfessor = (professor) => {
+    if(professor.nome && professor.email && professor.cpf && professor.materia !== "escolha"){
+      let erros = [];
+
+      if(!professor.nome.split(" ")[1]) erros.push("Digite o nome completo!");
+
+      if(!professor.email.endsWith("@gmail.com")) erros.push("O email precisa conter o sufixo '@gmail.com'!");
+
+      if(professor.cpf.length !== 11) erros.push("Digite o CPF completo!");
+      else if(!validarCPF(professor.cpf)) erros.push("Digite um CPF válido!");
+
+      if(erros.length == 0){
+        return true;
+      }
+      else{
+        exibirMessageBox(
+          '',
+          erros,
+          1
+        );
+        return false;
+      }
+    }
+    else{
+      exibirMessageBox(
+        '',
+        "Preencha todos os campos",
+        1
+      );
+      return false;
+    }
+  }
+
   function validarCPF(cpf){
     const digitoJ = gerarDigitoVerificador(cpf, 10);
     const digitoK = gerarDigitoVerificador(cpf, 11);
@@ -80,7 +113,8 @@ const useValidacao = () => {
   }
 
   return{
-    validarCadastroAlunoEtapa1, validarCadastroAlunoEtapa2
+    validarCadastroAlunoEtapa1, validarCadastroAlunoEtapa2,
+    validarCadastroProfessor
   };
 }
 

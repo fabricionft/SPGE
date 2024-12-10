@@ -10,7 +10,9 @@ import spge.spge.exception.RequestException;
 import spge.spge.model.AlunoModel;
 import spge.spge.model.BimestreModel;
 import spge.spge.model.DesempenhoModel;
+import spge.spge.model.SalaModel;
 import spge.spge.repository.AlunoRepository;
+import spge.spge.repository.SalaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +24,25 @@ public class AlunoService {
     private AlunoRepository aLunoRepository;
 
     @Autowired
+    private SalaRepository salaRepository;
+
+    @Autowired
     private PasswordEncoder encoder;
 
-    @Value("${senha.inicial}")
+    @Value("${senha.inicial.aluno}")
     private String senhaInicial;
 
 
     public List<AlunoModel> listarAlunos(){
         return aLunoRepository.findAll();
+    }
+
+    public List<AlunoModel> listarAlunosSemSala(){
+        return aLunoRepository.listarAlunosSemSala();
+    }
+
+    public List<AlunoModel> listarAlunosDeUmaSala(Long codigo){
+        return aLunoRepository.listarAlunosDeUmaSala(codigo);
     }
 
     public List<AlunoModel> listarAlunosDeUmaSalaEmOrdemAlfabetica(Long codigo){
@@ -66,9 +79,9 @@ public class AlunoService {
                     new ArrayList<DesempenhoModel>()
                 ));
             }
-        }
 
-        aluno.setSenha(encoder.encode(senhaInicial));
+            aluno.setSenha(encoder.encode(senhaInicial));
+        }
 
         return aLunoRepository.save(aluno);
     }
@@ -87,6 +100,12 @@ public class AlunoService {
 
     public String excluirALuno(Long codigo){
         AlunoModel aluno = buscarAlunoPorCodigo(codigo);
+
+        if(salaRepository.buscarSalaDeUmAluno(codigo).isPresent()){
+            SalaModel sala = salaRepository.buscarSalaDeUmAluno(codigo).get();
+            sala.setQuantidadeDeAlunos(sala.getQuantidadeDeAlunos() - 1);
+            salaRepository.save(sala);
+        }
 
         aLunoRepository.delete(aluno);
         return "Aluno excluído com sucesso!";

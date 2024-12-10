@@ -2,7 +2,6 @@
   width:fit-content;
   height: 40px;
   padding: 0 20px;
-  margin: 0 10px;
   color: #fff;
   display: flex;
   text-align: center;
@@ -20,4 +19,15 @@
 
 .botaoLink:hover{
   filter: brightness(90%);
+}
+
+.margemNaDireita{margin-right: 10px;}
+
+@media screen and (max-width: 400px) {
+  .botaoLink{
+    width: calc(100% - 40px);
+    margin: 0;
+  }
+
+  .margemEmBaixo{margin-bottom: 10px;}
 }

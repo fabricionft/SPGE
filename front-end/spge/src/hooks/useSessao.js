@@ -6,13 +6,13 @@ const useSessao = () => {
 
   const {
     logarAluno, deslogarAluno, sessaoAluno, codigoAluno,
-    logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, materiaProfessor,
+    logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, nomeProfessor, materiaProfessor,
     logarFuncionario, deslogarFuncionario, sessaoFuncionario, codigoFuncionario
   } = useContext(SessaoContext); 
 
   return{
     logarAluno, deslogarAluno, sessaoAluno, codigoAluno,
-    logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, materiaProfessor,
+    logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, nomeProfessor, materiaProfessor,
     logarFuncionario, deslogarFuncionario, sessaoFuncionario, codigoFuncionario
   };
 }

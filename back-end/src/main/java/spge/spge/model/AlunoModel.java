@@ -58,4 +58,8 @@ public class AlunoModel {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "bimestres_id")
     private List<BimestreModel> historicoDeDesempenho = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "recadosss_id")
+    private List<RecadoModel> recados = new ArrayList<>();
 }

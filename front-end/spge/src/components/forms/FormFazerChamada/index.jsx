@@ -1,36 +1,67 @@
 import styles from './FormFazerChamada.module.css';
 
 import useAlunos from "../../../hooks/useAlunos";
-import { useEffect, useState } from 'react';
+import useChamada from '../../../hooks/useChamada';
 
 
 export default function FormFazerChamada(){
 
+  const {chamada, setChamada, mudarChamada, enviarFormularioChamada} = useChamada();
   const {alunos} = useAlunos();
-
-  const lista = [];
-
-  alunos.map(() => {
-    lista.push("F")
-  })
-
-  const [a, setA] = useState([]);
-
+  const numeros = [1, 2, 3, 4];
 
   return(
     <>
-      {
+     {
         alunos.length && (
-          <form action="">
-              <label htmlFor="">Quantidade de aulas contínuas</label>
-              <select name="" id="">
-                <option value="Escolha">Escolha</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
+          <form
+            onSubmit={enviarFormularioChamada}
+          >
+              <label>Número do bimestre</label>
+              <select
+                name='numeroDoBimestre'
+                onChange={(e) => setChamada({...chamada, [e.target.name] : e.target.value})}
+              >
+                <option 
+                  value="escolha"
+                >
+                  Escolha
+                </option>
+                
+                {
+                  numeros.map((numero) => (
+                    <option
+                      key={numero} 
+                      value={numero}
+                    >
+                      {numero}º bimestre
+                    </option>
+                  ))
+                }
+              </select>
+
+
+              <label>Quantidade de aulas contínuas</label>
+              <select
+                name='quantidadeDeAulas'
+                onChange={(e) => setChamada({...chamada, [e.target.name] : e.target.value})}
+              >
+                <option 
+                  value="escolha"
+                >
+                  Escolha
+                </option>
+                
+                {
+                  numeros.map((numero) => (
+                    <option 
+                      key={numero}
+                      value={numero}
+                    >
+                      {numero} aula{(numero > 1) && "s"}
+                    </option>
+                  ))
+                }
               </select>
 
               <strong>
@@ -44,19 +75,16 @@ export default function FormFazerChamada(){
                     className={styles.listaChamada}
                   >
                     <p>{aluno.nome}</p>
-                    <div className={styles.faltaOuPresenca}
-                      onClick={() => {
-                        lista[index] = "P";
-                        setA(lista);
-                        console.log(a)
-                      }}
+                    <div className={styles.faltaOuPresenca+" "+styles[(chamada.presencas[index] == "P") && "presente"]}
+                      onClick={() => mudarChamada(index)}
                     ></div>
                   </div>
                 ))
               }
 
               <button
-   
+                className={[(chamada.numeroDoBimestre == "escolha" || chamada.quantidadeDeAulas == "escolha") && "desativado"]}
+                disabled={(chamada.numeroDoBimestre == "escolha" || chamada.quantidadeDeAulas == "escolha")}
               >
                 Concluir chamada
               </button>

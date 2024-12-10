@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface MateriaRepository extends JpaRepository<MateriaModel, Long> {
 
+    Optional<MateriaModel> findByCodigo(Long codigo);
     Optional<MateriaModel> findByMateria(String materia);
 }

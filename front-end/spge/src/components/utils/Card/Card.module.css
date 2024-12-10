@@ -58,7 +58,7 @@
   }
 }
 
-@media screen and (max-width: 350px){
+@media screen and (max-width: 400px){
   .card, .card:nth-child(5n + 1), .card:nth-child(4n + 1),   .card:nth-child(3n + 1){
     width: 100%;
   }

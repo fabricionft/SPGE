@@ -12,6 +12,12 @@ import java.util.Optional;
 @Repository
 public interface AlunoRepository extends JpaRepository<AlunoModel, Long> {
 
+    @Query(value = "select a from Aluno a where a.sala = 'Sem'")
+    List<AlunoModel> listarAlunosSemSala();
+
+    @Query(value = "select a from Sala s inner join s.alunos a where s.codigo = :codigoSala")
+    List<AlunoModel> listarAlunosDeUmaSala(Long codigoSala);
+
     @Query(value = "select a from Sala s inner join s.alunos a where s.codigo = :codigo order by a.nome asc")
     List<AlunoModel> listarAlunosDeUmaSalaEmOrdemAlfabetica(Long codigo);
 

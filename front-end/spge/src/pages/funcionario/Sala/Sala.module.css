@@ -1,0 +1,87 @@
+.nomeDaSala{
+  text-transform: capitalize;
+  font-size: 25px;
+  color: #333131;
+}
+
+.botoes{
+  display: flex;
+  justify-content: left;
+}
+
+.atalhosSala{
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.atalhosSala p{
+  padding: 5px;
+  margin: 0;
+  font-weight: bold;
+  border: 3px solid var(--primaria);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.atalhosSala p:nth-child(2){margin: 0 10px;}
+
+.selecionado{
+  background-color: var(--primaria);
+  color: #fff;
+}
+
+.painelAlunos{
+  width: 100%;
+  display: flex;
+  background-color: var(--card);
+  justify-content: center;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%), 0 8px 16px rgb(0 0 0 / 5%);
+  border: 1px solid rgb(201, 201, 249);
+}
+
+.margemPainelAlunos{
+  width: 100%;
+  margin: 25px;
+}
+
+.aluno, .professor{
+  width: 100%;
+  display: flex;
+}
+
+.aluno:nth-child(1) div p, .professor:nth-child(1) div p{
+  font-weight: bold;
+}
+
+.aluno div, .professor div{
+  display: flex;
+  align-items: center;
+  width: 10%;
+}
+
+.aluno div:nth-child(2){width: 30%;}
+.aluno div:nth-child(3){width: 15%;}
+.aluno div:nth-child(4){
+  justify-content: center;
+  width: 45%;
+}
+
+.professor div:nth-child(2){width: 30%;}
+.professor div:nth-child(3){width: 15%;}
+.professor div:nth-child(4){
+  justify-content: center;
+  width: 45%;
+}
+
+.aluno div p, .professor div p{
+  margin-left: 10px;
+}
+
+.aluno div:nth-child(4) p, .professor div:nth-child(4) p{
+  margin-left: -10px;
+}
+
+.aluno div button, .professor div button{
+  background-color: var(--erro);
+}

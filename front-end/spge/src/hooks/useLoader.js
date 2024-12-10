@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react"
-import { LoaderContext } from "../contexts/LoaderProvider"
+import { LoaderContext } from "../contexts/LoaderContext"
 import { useLocation } from "react-router-dom";
 
 const useLoader = () => {
@@ -12,7 +12,7 @@ const useLoader = () => {
   const location = useLocation();
 
   const alterarVisibilidadeLoader = (tamanhoDaLista) => {
-    setVisibilidadeLoader((tamanhoDaLista > 0) ? false : true);
+    setVisibilidadeLoader((tamanhoDaLista > 0) ? true : false);
   }
 
   useEffect(() => {

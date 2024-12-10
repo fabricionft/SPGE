@@ -35,6 +35,7 @@ export const SessaoProvider = ({children}) => {
   const deslogarProfessor = () => setSessaoProfessor(false);
 
   let codigoProfessor = sessaoProfessor.codigo;
+  let nomeProfessor = sessaoProfessor.nome;
   let materiaProfessor = sessaoProfessor.materia;
 
 
@@ -58,7 +59,7 @@ export const SessaoProvider = ({children}) => {
     <SessaoContext.Provider
       value={{
         logarAluno, deslogarAluno, sessaoAluno, codigoAluno,
-        logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, materiaProfessor,
+        logarProfessor, deslogarProfessor, sessaoProfessor, codigoProfessor, nomeProfessor, materiaProfessor,
         logarFuncionario, deslogarFuncionario, sessaoFuncionario, codigoFuncionario
       }}
     >

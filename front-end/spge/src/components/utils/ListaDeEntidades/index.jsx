@@ -4,7 +4,7 @@ import useLoader from "../../../hooks/useLoader"
 import Loader from "../Loader";
 
 
-export default function ListaDeEntidades({entidade, nomeEntidade, children}){
+export default function ListaDeEntidades({entidade, nomeEntidade, mensagemPersonalizada, children}){
 
   const {visibilidadeLoader} = useLoader();
 
@@ -19,9 +19,17 @@ export default function ListaDeEntidades({entidade, nomeEntidade, children}){
           <Loader/>
         ) : (
           <div className={styles.aviso}>
-            <p>
-              A lista de {nomeEntidade} ainda não possui registros!
-            </p>
+            {
+              (mensagemPersonalizada) ? (
+                <p>
+                  {mensagemPersonalizada}
+                </p>
+              ) : (
+                <p>
+                  A lista de {nomeEntidade} ainda não possui registros!
+                </p>
+              )
+          } 
           </div>
         )
       }
